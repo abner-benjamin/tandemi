@@ -4,6 +4,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 import { useAuth } from "../contexts/AuthContext";
 import TandemiLogo from "../components/TandemiLogo";
 import GoalCard from "../components/GoalCard";
+import LanguageToggle from "../components/LanguageToggle";
 
 // Sample data for the goals
 const sampleGoals = [
