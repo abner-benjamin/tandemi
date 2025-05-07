@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -12,7 +13,7 @@ export default {
 	theme: {
 		container: {
 			center: true,
-			padding: '2rem',
+			padding: '1rem',
 			screens: {
 				'2xl': '1400px'
 			}
@@ -61,7 +62,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+                tandemi: {
+                    pink: '#E4007C',
+                    'soft-gray': '#F1F0FB',
+                    'soft-pink': '#FFF2F7',
+                    'light-gray': '#F5F5F5',
+                    'neutral-gray': '#8E9196',
+                }
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,12 +92,50 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+                'fade-in': {
+                    "0%": {
+                        opacity: "0",
+                        transform: "translateY(10px)"
+                    },
+                    "100%": {
+                        opacity: "1",
+                        transform: "translateY(0)"
+                    }
+                },
+                'scale-in': {
+                    "0%": {
+                        transform: "scale(0.95)",
+                        opacity: "0"
+                    },
+                    "100%": {
+                        transform: "scale(1)",
+                        opacity: "1"
+                    }
+                },
+                'progress-celebration': {
+                    "0%": {
+                        transform: "scale(1)",
+                    },
+                    "50%": {
+                        transform: "scale(1.05)",
+                    },
+                    "100%": {
+                        transform: "scale(1)",
+                    }
+                }
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+				'accordion-up': 'accordion-up 0.2s ease-out',
+                'fade-in': 'fade-in 0.4s ease-out',
+                'scale-in': 'scale-in 0.3s ease-out',
+                'progress-celebration': 'progress-celebration 0.6s ease-in-out',
+                'enter': 'fade-in 0.4s ease-out, scale-in 0.3s ease-out',
+			},
+            fontFamily: {
+                'dm-sans': ['DM Sans', 'sans-serif']
+            }
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
