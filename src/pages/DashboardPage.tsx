@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useAuth } from "../contexts/AuthContext";
-import { Plus } from "lucide-react";
 import TandemiLogo from "../components/TandemiLogo";
 import GoalCard from "../components/GoalCard";
 import LanguageToggle from "../components/LanguageToggle";
@@ -127,14 +126,15 @@ const DashboardPage = () => {
         </div>
       </div>
       
-      {/* Floating Action Button with Text */}
-      <Button 
-        className="fixed bottom-6 right-6 rounded-full shadow-lg flex items-center justify-center bg-tandemi-pink hover:bg-opacity-90 px-6"
-        onClick={() => navigate("/create-goal")}
-      >
-        <Plus size={20} className="mr-1" />
-        <span>{t("dashboard.create_goal")}</span>
-      </Button>
+      {/* Full-width Floating Action Button */}
+      <div className="fixed bottom-6 left-0 right-0 px-4 max-w-lg mx-auto">
+        <Button 
+          className="w-full rounded-full shadow-lg bg-tandemi-pink hover:bg-opacity-90 py-3 h-auto"
+          onClick={() => navigate("/create-goal")}
+        >
+          <span className="text-base">{t("dashboard.create_goal")}</span>
+        </Button>
+      </div>
     </div>
   );
 };
