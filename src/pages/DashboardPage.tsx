@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -16,7 +15,7 @@ const sampleGoals = [
     name: "Abuelita's Surgery Fund",
     category: "Medical",
     amount: 2500,
-    progress: 1750,
+    progress: 1150, // Updated: $500 + $350 + $100 + $90 + $110 = $1150
     dueDate: new Date("2023-12-31").toISOString(),
     description: "Fund for grandmother's knee surgery in Mexico City",
   },
@@ -25,7 +24,7 @@ const sampleGoals = [
     name: "Spring Tuition for Sofia",
     category: "Education",
     amount: 1800,
-    progress: 900,
+    progress: 1125, // Updated: $500 + $500 + $75 + $50 = $1125
     dueDate: new Date("2023-09-01").toISOString(),
     description: "College tuition payment for Sofia's spring semester",
   },
@@ -34,7 +33,7 @@ const sampleGoals = [
     name: "House Repair in Puebla",
     category: "Housing",
     amount: 3000,
-    progress: 2100,
+    progress: 1160, // Updated: $400 + $500 + $60 + $80 + $120 = $1160
     dueDate: new Date("2023-11-15").toISOString(),
     description: "Roof repairs and painting for the family home in Puebla",
   }
