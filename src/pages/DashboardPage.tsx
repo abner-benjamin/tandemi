@@ -1,4 +1,5 @@
 
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useAuth } from "../contexts/AuthContext";
@@ -35,6 +36,20 @@ const DashboardPage = () => {
   const { t } = useLanguage();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [goals, setGoals] = useState(() => {
+    // Try to load goals from sessionStorage first
+    const storedGoals = sessionStorage.getItem('userGoals');
+    if (storedGoals) {
+      return JSON.parse(storedGoals);
+    }
+    // Fall back to sample goals if nothing in storage
+    return sampleGoals;
+  });
+  
+  // When goals change, update sessionStorage
+  useEffect(() => {
+    sessionStorage.setItem('userGoals', JSON.stringify(goals));
+  }, [goals]);
 
   return (
     <div className="min-h-screen bg-tandemi-light-gray animate-fade-in max-w-lg mx-auto">
@@ -60,7 +75,7 @@ const DashboardPage = () => {
         <h2 className="font-semibold text-lg mb-4">{t("dashboard.your_goals")}</h2>
         
         <div className="space-y-3">
-          {sampleGoals.map((goal) => (
+          {goals.map((goal) => (
             <GoalCard 
               key={goal.id}
               id={goal.id}

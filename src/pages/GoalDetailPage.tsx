@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -160,16 +159,45 @@ const GoalDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState("overview");
   
-  const goal = sampleGoals.find((g) => g.id === id);
+  // Get goals from sessionStorage
+  const [goals, setGoals] = useState(() => {
+    const storedGoals = sessionStorage.getItem('userGoals');
+    if (storedGoals) {
+      return JSON.parse(storedGoals);
+    }
+    return sampleGoals;
+  });
+  
+  // Find the current goal
+  const goal = goals.find((g) => g.id === id) || {
+    id: id || "0",
+    name: "Goal not found",
+    category: "Other",
+    amount: 0,
+    progress: 0,
+    dueDate: new Date(),
+    description: "Goal details could not be loaded"
+  };
+  
+  // If this is a new goal without these fields, add them
+  useEffect(() => {
+    if (!goal.dueDate) {
+      goal.dueDate = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000); // 90 days from now
+    }
+    if (!goal.description) {
+      goal.description = "No description provided";
+    }
+  }, [goal]);
+  
   const goalContributions = sampleContributions.filter((c) => c.goalId === id);
   const goalFamilyMembers = sampleFamilyMembers.filter((f) => f.goalId === id);
-  
-  if (!goal) {
-    return <div>Goal not found</div>;
-  }
 
   const progressPercentage = Math.min(100, (goal.progress / goal.amount) * 100);
   const remainingAmount = Math.max(0, goal.amount - goal.progress);
+  
+  // Convert string date to Date object if needed
+  const dueDate = goal.dueDate instanceof Date ? 
+    goal.dueDate : new Date(goal.dueDate);
 
   return (
     <div className="min-h-screen bg-tandemi-light-gray animate-fade-in max-w-lg mx-auto">
@@ -235,7 +263,7 @@ const GoalDetailPage = () => {
               <div className="flex justify-between items-center">
                 <div>
                   <p className="text-xs text-tandemi-neutral-gray">{t("goal_details.due_date")}</p>
-                  <p className="font-medium">{goal.dueDate.toLocaleDateString()}</p>
+                  <p className="font-medium">{dueDate.toLocaleDateString()}</p>
                 </div>
                 
                 <div>

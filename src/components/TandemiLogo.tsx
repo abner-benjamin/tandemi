@@ -24,7 +24,7 @@ const TandemiLogo = ({ size = "md", variant = "full" }: TandemiLogoProps) => {
         className={getSizeClass()}
       />
       {variant === "full" && (
-        <span className="ml-2 font-bold text-2xl text-tandemi-pink">Tandemi</span>
+        <span className="ml-2 font-bold text-2xl text-black">Tandemi</span>
       )}
     </div>
   );

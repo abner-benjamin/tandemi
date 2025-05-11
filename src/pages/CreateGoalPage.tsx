@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -34,6 +33,55 @@ const CreateGoalPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Create a new goal object
+    const newGoal = {
+      id: `new-${Date.now()}`, // Create a unique ID
+      name: formData.name,
+      category: formData.category || "Other",
+      amount: parseFloat(formData.amount) || 0,
+      progress: 0, // New goals start with 0 progress
+    };
+    
+    // Add new goal to sessionStorage
+    const storedGoals = sessionStorage.getItem('userGoals');
+    let updatedGoals = [];
+    
+    if (storedGoals) {
+      updatedGoals = JSON.parse(storedGoals);
+    } else {
+      // Initialize with sample goals if this is first time
+      updatedGoals = [
+        {
+          id: "1",
+          name: "Abuelita's Surgery Fund",
+          category: "Medical",
+          amount: 2500,
+          progress: 1750,
+        },
+        {
+          id: "2",
+          name: "Spring Tuition for Sofia",
+          category: "Education",
+          amount: 1800,
+          progress: 900,
+        },
+        {
+          id: "3",
+          name: "House Repair in Puebla",
+          category: "Housing",
+          amount: 3000,
+          progress: 2100,
+        }
+      ];
+    }
+    
+    // Add new goal to the beginning of array
+    updatedGoals.unshift(newGoal);
+    
+    // Save to sessionStorage
+    sessionStorage.setItem('userGoals', JSON.stringify(updatedGoals));
+    
     setIsSuccess(true);
     
     setTimeout(() => {
