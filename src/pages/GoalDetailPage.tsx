@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -53,6 +52,48 @@ const sampleFamilyMembers = [
   },
 ];
 
+// Sample contributions if none exist in session storage
+const sampleContributions = [
+  {
+    id: "c1",
+    goalId: "1",
+    amount: 200,
+    date: new Date("2023-04-15"),
+    type: "cash",
+    purpose: "medical",
+    contributor: "Juan Perez",
+    note: "Birthday money from Tio Carlos"
+  },
+  {
+    id: "c2",
+    goalId: "1",
+    amount: 500,
+    date: new Date("2023-05-20"),
+    type: "remittance",
+    purpose: "medical",
+    contributor: "Maria Rodriguez"
+  },
+  {
+    id: "c3",
+    goalId: "2",
+    amount: 300,
+    date: new Date("2023-03-10"),
+    type: "gift",
+    purpose: "education",
+    contributor: "Ana Gomez",
+    note: "For textbooks"
+  },
+  {
+    id: "c4",
+    goalId: "3",
+    amount: 450,
+    date: new Date("2023-05-05"),
+    type: "cash",
+    purpose: "rent",
+    contributor: "Carlos Diaz"
+  }
+];
+
 const GoalDetailPage = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
@@ -74,7 +115,7 @@ const GoalDetailPage = () => {
     if (storedContributions) {
       return JSON.parse(storedContributions);
     }
-    return [];
+    return sampleContributions;
   });
   
   // Listen for changes in sessionStorage
@@ -88,8 +129,15 @@ const GoalDetailPage = () => {
       const storedContributions = sessionStorage.getItem('userContributions');
       if (storedContributions) {
         setContributions(JSON.parse(storedContributions));
+      } else {
+        // If for some reason contributions are empty, add sample contributions
+        sessionStorage.setItem('userContributions', JSON.stringify(sampleContributions));
+        setContributions(sampleContributions);
       }
     };
+    
+    // Call once on mount to ensure data is loaded
+    handleStorageChange();
     
     window.addEventListener('storage', handleStorageChange);
     

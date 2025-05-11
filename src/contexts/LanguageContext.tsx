@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState, ReactNode } from "react";
 
 type LanguageContextType = {
@@ -218,6 +217,10 @@ const translations = {
   "contribution.add_another": {
     en: "Add Another",
     es: "Agregar Otra"
+  },
+  "contribution.empty": {
+    en: "Every little bit counts. Add your first contribution to move your family goal forward.",
+    es: "Cada granito de arena cuenta. Agrega tu primera contribución para avanzar hacia la meta familiar."
   },
   // Family
   "family.invite": {
