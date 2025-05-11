@@ -7,6 +7,37 @@ import TandemiLogo from "../components/TandemiLogo";
 import GoalCard from "../components/GoalCard";
 import LanguageToggle from "../components/LanguageToggle";
 
+// Sample data for the goals (fallback if sessionStorage is empty)
+const sampleGoals = [
+  {
+    id: "1",
+    name: "Abuelita's Surgery Fund",
+    category: "Medical",
+    amount: 2500,
+    progress: 1750,
+    dueDate: new Date("2023-12-31").toISOString(),
+    description: "Fund for grandmother's knee surgery in Mexico City",
+  },
+  {
+    id: "2",
+    name: "Spring Tuition for Sofia",
+    category: "Education",
+    amount: 1800,
+    progress: 900,
+    dueDate: new Date("2023-09-01").toISOString(),
+    description: "College tuition payment for Sofia's spring semester",
+  },
+  {
+    id: "3",
+    name: "House Repair in Puebla",
+    category: "Housing",
+    amount: 3000,
+    progress: 2100,
+    dueDate: new Date("2023-11-15").toISOString(),
+    description: "Roof repairs and painting for the family home in Puebla",
+  }
+];
+
 const DashboardPage = () => {
   const { t } = useLanguage();
   const { user } = useAuth();
@@ -19,8 +50,8 @@ const DashboardPage = () => {
     if (storedGoals) {
       return JSON.parse(storedGoals);
     }
-    // Fall back to empty array if nothing in storage
-    return [];
+    // Fall back to default sample goals
+    return sampleGoals;
   });
   
   // Listen for changes in sessionStorage
@@ -29,8 +60,15 @@ const DashboardPage = () => {
       const storedGoals = sessionStorage.getItem('userGoals');
       if (storedGoals) {
         setGoals(JSON.parse(storedGoals));
+      } else {
+        // If for some reason the storage is empty, use sample goals
+        sessionStorage.setItem('userGoals', JSON.stringify(sampleGoals));
+        setGoals(sampleGoals);
       }
     };
+    
+    // Run once on mount to ensure goals are loaded
+    handleStorageChange();
     
     window.addEventListener('storage', handleStorageChange);
     
@@ -67,7 +105,7 @@ const DashboardPage = () => {
         <h2 className="font-semibold text-lg mb-4">{t("dashboard.your_goals")}</h2>
         
         <div className="space-y-3">
-          {goals.length > 0 ? (
+          {goals && goals.length > 0 ? (
             goals.map((goal) => (
               <GoalCard 
                 key={goal.id}

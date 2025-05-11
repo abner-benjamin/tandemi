@@ -110,17 +110,10 @@ const Index = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    // Initialize session storage with sample goals if empty
-    if (!sessionStorage.getItem('userGoals')) {
-      sessionStorage.setItem('userGoals', JSON.stringify(sampleGoals));
-    }
+    // Always initialize session storage with sample goals
+    sessionStorage.setItem('userGoals', JSON.stringify(sampleGoals));
     
-    // Initialize session storage with sample contributions if empty
-    if (!sessionStorage.getItem('userContributions')) {
-      sessionStorage.setItem('userContributions', JSON.stringify(sampleContributions));
-    }
-    
-    // Always ensure the contributions are stored
+    // Always initialize session storage with sample contributions
     sessionStorage.setItem('userContributions', JSON.stringify(sampleContributions));
     
     // Redirect to splash page

@@ -2,6 +2,7 @@
 import { format } from "date-fns";
 import { DollarSign } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
+import { formatNumber } from "../utils/formatters";
 
 type ContributionItemProps = {
   id: string;
@@ -27,11 +28,6 @@ const ContributionItem = ({ amount, date, type, purpose, contributor, note }: Co
       default:
         return "bg-gray-100 text-gray-600";
     }
-  };
-  
-  // Format number with commas
-  const formatNumber = (num) => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   return (

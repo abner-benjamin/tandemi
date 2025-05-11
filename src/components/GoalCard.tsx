@@ -2,6 +2,7 @@
 import { Heart, DollarSign, GraduationCap, House, Pill } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { cn } from "@/lib/utils";
+import { formatNumber } from "../utils/formatters";
 
 type GoalCardProps = {
   id: string;
@@ -40,11 +41,6 @@ const GoalCard = ({ id, name, category, amount, progress, onClick, className }: 
       default:
         return "bg-purple-100 text-purple-600";
     }
-  };
-  
-  // Format number with commas
-  const formatNumber = (num) => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   return (
