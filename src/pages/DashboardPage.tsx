@@ -7,49 +7,41 @@ import TandemiLogo from "../components/TandemiLogo";
 import GoalCard from "../components/GoalCard";
 import LanguageToggle from "../components/LanguageToggle";
 
-// Sample data for the goals
-const sampleGoals = [
-  {
-    id: "1",
-    name: "Abuelita's Surgery Fund",
-    category: "Medical",
-    amount: 2500,
-    progress: 1750,
-  },
-  {
-    id: "2",
-    name: "Spring Tuition for Sofia",
-    category: "Education",
-    amount: 1800,
-    progress: 900,
-  },
-  {
-    id: "3",
-    name: "House Repair in Puebla",
-    category: "Housing",
-    amount: 3000,
-    progress: 2100,
-  }
-];
-
 const DashboardPage = () => {
   const { t } = useLanguage();
   const { user } = useAuth();
   const navigate = useNavigate();
+  
+  // Get goals from sessionStorage
   const [goals, setGoals] = useState(() => {
     // Try to load goals from sessionStorage first
     const storedGoals = sessionStorage.getItem('userGoals');
     if (storedGoals) {
       return JSON.parse(storedGoals);
     }
-    // Fall back to sample goals if nothing in storage
-    return sampleGoals;
+    // Fall back to empty array if nothing in storage
+    return [];
   });
   
-  // When goals change, update sessionStorage
+  // Listen for changes in sessionStorage
   useEffect(() => {
-    sessionStorage.setItem('userGoals', JSON.stringify(goals));
-  }, [goals]);
+    const handleStorageChange = () => {
+      const storedGoals = sessionStorage.getItem('userGoals');
+      if (storedGoals) {
+        setGoals(JSON.parse(storedGoals));
+      }
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Also check periodically in case user is in same tab
+    const interval = setInterval(handleStorageChange, 1000);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-tandemi-light-gray animate-fade-in max-w-lg mx-auto">
@@ -75,17 +67,23 @@ const DashboardPage = () => {
         <h2 className="font-semibold text-lg mb-4">{t("dashboard.your_goals")}</h2>
         
         <div className="space-y-3">
-          {goals.map((goal) => (
-            <GoalCard 
-              key={goal.id}
-              id={goal.id}
-              name={goal.name}
-              category={goal.category}
-              amount={goal.amount}
-              progress={goal.progress}
-              onClick={() => navigate(`/goal/${goal.id}`)}
-            />
-          ))}
+          {goals.length > 0 ? (
+            goals.map((goal) => (
+              <GoalCard 
+                key={goal.id}
+                id={goal.id}
+                name={goal.name}
+                category={goal.category}
+                amount={goal.amount}
+                progress={goal.progress}
+                onClick={() => navigate(`/goal/${goal.id}`)}
+              />
+            ))
+          ) : (
+            <div className="text-center p-8">
+              <p className="text-tandemi-neutral-gray">{t("dashboard.no_goals")}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

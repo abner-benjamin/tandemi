@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
 import BackButton from "../components/BackButton";
@@ -9,39 +9,34 @@ import { Label } from "@/components/ui/label";
 import { Check, Calendar, DollarSign } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-
-// Sample data for the goals
-const sampleGoals = [
-  {
-    id: "1",
-    name: "Abuelita's Surgery Fund",
-    category: "Medical",
-    amount: 2500,
-    progress: 1750,
-  },
-  {
-    id: "2",
-    name: "Spring Tuition for Sofia",
-    category: "Education",
-    amount: 1800,
-    progress: 900,
-  },
-  {
-    id: "3",
-    name: "House Repair in Puebla",
-    category: "Housing",
-    amount: 3000,
-    progress: 2100,
-  }
-];
+import { useToast } from "@/hooks/use-toast";
 
 const ContributionPage = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [isSuccess, setIsSuccess] = useState(false);
+  const { toast } = useToast();
   
-  const goal = sampleGoals.find((g) => g.id === id);
+  // Get goals from sessionStorage
+  const [goals, setGoals] = useState(() => {
+    const storedGoals = sessionStorage.getItem('userGoals');
+    if (storedGoals) {
+      return JSON.parse(storedGoals);
+    }
+    return [];
+  });
+  
+  const goal = goals.find((g) => g.id === id);
+  
+  // Get contributions from sessionStorage
+  const [contributions, setContributions] = useState(() => {
+    const storedContributions = sessionStorage.getItem('userContributions');
+    if (storedContributions) {
+      return JSON.parse(storedContributions);
+    }
+    return [];
+  });
   
   const [formData, setFormData] = useState({
     amount: "",
@@ -62,6 +57,48 @@ const ContributionPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!goal) {
+      toast({
+        title: "Error",
+        description: "Goal not found",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // Create new contribution
+    const newContribution = {
+      id: `contribution-${Date.now()}`,
+      goalId: id,
+      amount: parseFloat(formData.amount),
+      date: new Date(formData.date),
+      type: formData.type || "Cash",
+      purpose: formData.purpose || "Other",
+      contributor: "You",
+      note: formData.note || "",
+    };
+    
+    // Add contribution to session storage
+    const updatedContributions = [...contributions, newContribution];
+    sessionStorage.setItem('userContributions', JSON.stringify(updatedContributions));
+    setContributions(updatedContributions);
+    
+    // Update goal progress
+    const updatedGoals = goals.map(g => {
+      if (g.id === id) {
+        return {
+          ...g,
+          progress: g.progress + parseFloat(formData.amount)
+        };
+      }
+      return g;
+    });
+    
+    // Update goals in session storage
+    sessionStorage.setItem('userGoals', JSON.stringify(updatedGoals));
+    setGoals(updatedGoals);
+    
     setIsSuccess(true);
     
     setTimeout(() => {
@@ -70,7 +107,20 @@ const ContributionPage = () => {
   };
   
   if (!goal) {
-    return <div>Goal not found</div>;
+    return (
+      <div className="min-h-screen bg-tandemi-light-gray p-4 flex flex-col items-center justify-center animate-fade-in max-w-lg mx-auto">
+        <div className="bg-white rounded-2xl p-6 shadow-md w-full max-w-md text-center">
+          <h1 className="text-xl font-bold mb-2">{t("common.error")}</h1>
+          <p className="mb-6">{t("common.goal_not_found")}</p>
+          <Button 
+            className="button-primary" 
+            onClick={() => navigate("/dashboard")}
+          >
+            {t("common.return_to_dashboard")}
+          </Button>
+        </div>
+      </div>
+    );
   }
   
   if (isSuccess) {

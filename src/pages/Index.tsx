@@ -36,6 +36,76 @@ const sampleGoals = [
   }
 ];
 
+// Sample contributions data
+const sampleContributions = [
+  {
+    id: "c1",
+    goalId: "1",
+    amount: 500,
+    date: new Date("2023-05-15"),
+    type: "Remittance",
+    purpose: "Medical",
+    contributor: "Juan Perez",
+    note: "Monthly contribution from salary",
+  },
+  {
+    id: "c2",
+    goalId: "1",
+    amount: 250,
+    date: new Date("2023-05-02"),
+    type: "Cash",
+    purpose: "Medical",
+    contributor: "Maria Rodriguez",
+  },
+  {
+    id: "c3",
+    goalId: "1",
+    amount: 1000,
+    date: new Date("2023-04-10"),
+    type: "Gift",
+    purpose: "Medical",
+    contributor: "The López Family",
+    note: "Family collection at reunion",
+  },
+  {
+    id: "c4",
+    goalId: "2",
+    amount: 500,
+    date: new Date("2023-05-12"),
+    type: "Remittance",
+    purpose: "Education",
+    contributor: "Ana Gomez",
+  },
+  {
+    id: "c5",
+    goalId: "2",
+    amount: 400,
+    date: new Date("2023-05-01"),
+    type: "Cash",
+    purpose: "Education",
+    contributor: "Carlos Diaz",
+  },
+  {
+    id: "c6",
+    goalId: "3",
+    amount: 1000,
+    date: new Date("2023-05-10"),
+    type: "Remittance",
+    purpose: "Housing",
+    contributor: "Roberto Flores",
+  },
+  {
+    id: "c7",
+    goalId: "3",
+    amount: 600,
+    date: new Date("2023-04-20"),
+    type: "Cash",
+    purpose: "Housing",
+    contributor: "Lucia Morales",
+    note: "From the savings account",
+  }
+];
+
 const Index = () => {
   const navigate = useNavigate();
   
@@ -43,6 +113,11 @@ const Index = () => {
     // Initialize session storage with sample goals if empty
     if (!sessionStorage.getItem('userGoals')) {
       sessionStorage.setItem('userGoals', JSON.stringify(sampleGoals));
+    }
+    
+    // Initialize session storage with sample contributions if empty
+    if (!sessionStorage.getItem('userContributions')) {
+      sessionStorage.setItem('userContributions', JSON.stringify(sampleContributions));
     }
     
     // Redirect to splash page

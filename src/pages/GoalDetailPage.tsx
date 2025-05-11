@@ -8,107 +8,6 @@ import FamilyMemberItem from "../components/FamilyMemberItem";
 import { Button } from "@/components/ui/button";
 import { DollarSign, Heart } from "lucide-react";
 
-// Sample data for the goals
-const sampleGoals = [
-  {
-    id: "1",
-    name: "Abuelita's Surgery Fund",
-    category: "Medical",
-    amount: 2500,
-    progress: 1750,
-    dueDate: new Date("2023-12-31"),
-    description: "Fund for grandmother's knee surgery in Mexico City",
-  },
-  {
-    id: "2",
-    name: "Spring Tuition for Sofia",
-    category: "Education",
-    amount: 1800,
-    progress: 900,
-    dueDate: new Date("2023-09-01"),
-    description: "College tuition payment for Sofia's spring semester",
-  },
-  {
-    id: "3",
-    name: "House Repair in Puebla",
-    category: "Housing",
-    amount: 3000,
-    progress: 2100,
-    dueDate: new Date("2023-11-15"),
-    description: "Roof repairs and painting for the family home in Puebla",
-  }
-];
-
-// Sample contributions data
-const sampleContributions = [
-  {
-    id: "c1",
-    goalId: "1",
-    amount: 500,
-    date: new Date("2023-05-15"),
-    type: "Remittance",
-    purpose: "Medical",
-    contributor: "Juan Perez",
-    note: "Monthly contribution from salary",
-  },
-  {
-    id: "c2",
-    goalId: "1",
-    amount: 250,
-    date: new Date("2023-05-02"),
-    type: "Cash",
-    purpose: "Medical",
-    contributor: "Maria Rodriguez",
-  },
-  {
-    id: "c3",
-    goalId: "1",
-    amount: 1000,
-    date: new Date("2023-04-10"),
-    type: "Gift",
-    purpose: "Medical",
-    contributor: "The López Family",
-    note: "Family collection at reunion",
-  },
-  {
-    id: "c4",
-    goalId: "2",
-    amount: 500,
-    date: new Date("2023-05-12"),
-    type: "Remittance",
-    purpose: "Education",
-    contributor: "Ana Gomez",
-  },
-  {
-    id: "c5",
-    goalId: "2",
-    amount: 400,
-    date: new Date("2023-05-01"),
-    type: "Cash",
-    purpose: "Education",
-    contributor: "Carlos Diaz",
-  },
-  {
-    id: "c6",
-    goalId: "3",
-    amount: 1000,
-    date: new Date("2023-05-10"),
-    type: "Remittance",
-    purpose: "Housing",
-    contributor: "Roberto Flores",
-  },
-  {
-    id: "c7",
-    goalId: "3",
-    amount: 600,
-    date: new Date("2023-04-20"),
-    type: "Cash",
-    purpose: "Housing",
-    contributor: "Lucia Morales",
-    note: "From the savings account",
-  },
-];
-
 // Sample family members
 const sampleFamilyMembers = [
   {
@@ -165,8 +64,42 @@ const GoalDetailPage = () => {
     if (storedGoals) {
       return JSON.parse(storedGoals);
     }
-    return sampleGoals;
+    return [];
   });
+  
+  // Get contributions from sessionStorage
+  const [contributions, setContributions] = useState(() => {
+    const storedContributions = sessionStorage.getItem('userContributions');
+    if (storedContributions) {
+      return JSON.parse(storedContributions);
+    }
+    return [];
+  });
+  
+  // Listen for changes in sessionStorage
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedGoals = sessionStorage.getItem('userGoals');
+      if (storedGoals) {
+        setGoals(JSON.parse(storedGoals));
+      }
+      
+      const storedContributions = sessionStorage.getItem('userContributions');
+      if (storedContributions) {
+        setContributions(JSON.parse(storedContributions));
+      }
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Also check periodically in case user is in same tab
+    const interval = setInterval(handleStorageChange, 1000);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, []);
   
   // Find the current goal
   const goal = goals.find((g) => g.id === id) || {
@@ -179,6 +112,12 @@ const GoalDetailPage = () => {
     description: "Goal details could not be loaded"
   };
   
+  // Filter contributions for this goal
+  const goalContributions = contributions.filter(c => c.goalId === id);
+  
+  // Filter family members for this goal
+  const goalFamilyMembers = sampleFamilyMembers.filter(f => f.goalId === id);
+  
   // If this is a new goal without these fields, add them
   useEffect(() => {
     if (!goal.dueDate) {
@@ -188,9 +127,6 @@ const GoalDetailPage = () => {
       goal.description = "No description provided";
     }
   }, [goal]);
-  
-  const goalContributions = sampleContributions.filter((c) => c.goalId === id);
-  const goalFamilyMembers = sampleFamilyMembers.filter((f) => f.goalId === id);
 
   const progressPercentage = Math.min(100, (goal.progress / goal.amount) * 100);
   const remainingAmount = Math.max(0, goal.amount - goal.progress);
@@ -275,18 +211,24 @@ const GoalDetailPage = () => {
             
             <h3 className="font-semibold mb-2">{t("goal_details.contributions")}</h3>
             <div className="space-y-3 max-h-60 overflow-y-auto no-scrollbar">
-              {goalContributions.slice(0, 2).map((contribution) => (
-                <ContributionItem
-                  key={contribution.id}
-                  id={contribution.id}
-                  amount={contribution.amount}
-                  date={contribution.date}
-                  type={contribution.type}
-                  purpose={contribution.purpose}
-                  contributor={contribution.contributor}
-                  note={contribution.note}
-                />
-              ))}
+              {goalContributions.length > 0 ? (
+                goalContributions.slice(0, 2).map((contribution) => (
+                  <ContributionItem
+                    key={contribution.id}
+                    id={contribution.id}
+                    amount={contribution.amount}
+                    date={contribution.date instanceof Date ? contribution.date : new Date(contribution.date)}
+                    type={contribution.type}
+                    purpose={contribution.purpose}
+                    contributor={contribution.contributor}
+                    note={contribution.note}
+                  />
+                ))
+              ) : (
+                <div className="text-center p-4">
+                  <p className="text-tandemi-neutral-gray">{t("contribution.empty")}</p>
+                </div>
+              )}
             </div>
           </TabsContent>
           
@@ -302,18 +244,24 @@ const GoalDetailPage = () => {
             </div>
             
             <div className="space-y-3 max-h-screen overflow-y-auto no-scrollbar">
-              {goalContributions.map((contribution) => (
-                <ContributionItem
-                  key={contribution.id}
-                  id={contribution.id}
-                  amount={contribution.amount}
-                  date={contribution.date}
-                  type={contribution.type}
-                  purpose={contribution.purpose}
-                  contributor={contribution.contributor}
-                  note={contribution.note}
-                />
-              ))}
+              {goalContributions.length > 0 ? (
+                goalContributions.map((contribution) => (
+                  <ContributionItem
+                    key={contribution.id}
+                    id={contribution.id}
+                    amount={contribution.amount}
+                    date={contribution.date instanceof Date ? contribution.date : new Date(contribution.date)}
+                    type={contribution.type}
+                    purpose={contribution.purpose}
+                    contributor={contribution.contributor}
+                    note={contribution.note}
+                  />
+                ))
+              ) : (
+                <div className="text-center p-8">
+                  <p className="text-tandemi-neutral-gray">{t("contribution.empty")}</p>
+                </div>
+              )}
             </div>
           </TabsContent>
           
