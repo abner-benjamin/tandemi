@@ -127,12 +127,13 @@ const DashboardPage = () => {
         </div>
       </div>
       
-      {/* Floating Action Button */}
+      {/* Floating Action Button with Text */}
       <Button 
-        className="fixed bottom-6 right-6 rounded-full w-14 h-14 shadow-lg flex items-center justify-center bg-tandemi-pink hover:bg-opacity-90"
+        className="fixed bottom-6 right-6 rounded-full shadow-lg flex items-center justify-center bg-tandemi-pink hover:bg-opacity-90 px-6"
         onClick={() => navigate("/create-goal")}
       >
-        <Plus size={24} />
+        <Plus size={20} className="mr-1" />
+        <span>{t("dashboard.create_goal")}</span>
       </Button>
     </div>
   );
