@@ -67,6 +67,14 @@ const translations = {
     en: "You don't have any goals yet. Create your first goal to get started.",
     es: "Aún no tienes metas. Crea tu primera meta para comenzar."
   },
+  "dashboard.contributions_chart": {
+    en: "Family Contributions Over Time",
+    es: "Aportes de la familia con el tiempo"
+  },
+  "dashboard.total_contributions": {
+    en: "contributed across all goals",
+    es: "aportados entre todas las metas"
+  },
   // Goal Categories
   "category.medical": {
     en: "Medical",
@@ -169,6 +177,10 @@ const translations = {
   "goal_details.log_contribution": {
     en: "Log Contribution",
     es: "Registrar Contribución"
+  },
+  "goal_details.no_description": {
+    en: "No description provided for this goal.",
+    es: "No se proporcionó descripción para esta meta."
   },
   // Contribution
   "contribution.title": {

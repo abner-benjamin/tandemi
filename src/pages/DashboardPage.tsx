@@ -6,6 +6,7 @@ import { useAuth } from "../contexts/AuthContext";
 import TandemiLogo from "../components/TandemiLogo";
 import GoalCard from "../components/GoalCard";
 import LanguageToggle from "../components/LanguageToggle";
+import FamilyContributionsChart from "../components/FamilyContributionsChart";
 
 // Sample data for the goals (fallback if sessionStorage is empty)
 const sampleGoals = [
@@ -97,6 +98,9 @@ const DashboardPage = () => {
         <h1 className="text-2xl font-bold">
           {language === "es" ? `¡${t("dashboard.welcome")}, ${userName}!` : `${t("dashboard.welcome")}, ${userName}!`}
         </h1>
+        
+        {/* Family Contributions Chart */}
+        <FamilyContributionsChart />
         
         <button 
           className="button-primary w-full my-6"

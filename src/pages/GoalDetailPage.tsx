@@ -198,7 +198,7 @@ const GoalDetailPage = () => {
       goal.dueDate = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000); // 90 days from now
     }
     if (!goal.description) {
-      goal.description = "No description provided";
+      goal.description = ""; // Empty description to trigger the fallback message
     }
   }, [goal]);
 
@@ -222,8 +222,8 @@ const GoalDetailPage = () => {
   return (
     <div className="min-h-screen bg-tandemi-light-gray animate-fade-in max-w-lg mx-auto">
       <div className="p-4 flex items-center">
-        <BackButton className="mr-auto" to="/dashboard" />
-        <h1 className="text-lg font-bold truncate max-w-[200px] mx-auto overflow-x-auto whitespace-nowrap">
+        <BackButton className="mr-2" to="/dashboard" />
+        <h1 className="text-lg font-bold truncate max-w-[280px] mx-auto overflow-x-auto whitespace-nowrap text-right">
           {goal.name}
         </h1>
         <div className="w-10"></div> {/* Spacer for centering title */}
@@ -280,7 +280,9 @@ const GoalDetailPage = () => {
           <TabsContent value="overview" className="mt-2">
             <div className="bg-white rounded-2xl p-4 card-shadow mb-4">
               <h3 className="font-semibold mb-2">{goal.name}</h3>
-              <p className="text-tandemi-neutral-gray text-sm mb-4">{goal.description}</p>
+              <p className="text-tandemi-neutral-gray text-sm mb-4">
+                {goal.description ? goal.description : t("goal_details.no_description")}
+              </p>
               
               <div className="flex justify-between items-center">
                 <div>
