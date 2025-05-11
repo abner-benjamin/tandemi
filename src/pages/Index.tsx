@@ -13,7 +13,7 @@ const sampleGoals = [
     category: "Medical",
     amount: 2500,
     progress: 1750,
-    dueDate: new Date("2023-12-31"),
+    dueDate: new Date("2023-12-31").toISOString(),
     description: "Fund for grandmother's knee surgery in Mexico City",
   },
   {
@@ -22,7 +22,7 @@ const sampleGoals = [
     category: "Education",
     amount: 1800,
     progress: 900,
-    dueDate: new Date("2023-09-01"),
+    dueDate: new Date("2023-09-01").toISOString(),
     description: "College tuition payment for Sofia's spring semester",
   },
   {
@@ -31,7 +31,7 @@ const sampleGoals = [
     category: "Housing",
     amount: 3000,
     progress: 2100,
-    dueDate: new Date("2023-11-15"),
+    dueDate: new Date("2023-11-15").toISOString(),
     description: "Roof repairs and painting for the family home in Puebla",
   }
 ];
@@ -42,7 +42,7 @@ const sampleContributions = [
     id: "c1",
     goalId: "1",
     amount: 500,
-    date: new Date("2023-05-15"),
+    date: new Date("2023-05-15").toISOString(),
     type: "Remittance",
     purpose: "Medical",
     contributor: "Juan Perez",
@@ -52,7 +52,7 @@ const sampleContributions = [
     id: "c2",
     goalId: "1",
     amount: 250,
-    date: new Date("2023-05-02"),
+    date: new Date("2023-05-02").toISOString(),
     type: "Cash",
     purpose: "Medical",
     contributor: "Maria Rodriguez",
@@ -61,7 +61,7 @@ const sampleContributions = [
     id: "c3",
     goalId: "1",
     amount: 1000,
-    date: new Date("2023-04-10"),
+    date: new Date("2023-04-10").toISOString(),
     type: "Gift",
     purpose: "Medical",
     contributor: "The López Family",
@@ -71,7 +71,7 @@ const sampleContributions = [
     id: "c4",
     goalId: "2",
     amount: 500,
-    date: new Date("2023-05-12"),
+    date: new Date("2023-05-12").toISOString(),
     type: "Remittance",
     purpose: "Education",
     contributor: "Ana Gomez",
@@ -80,7 +80,7 @@ const sampleContributions = [
     id: "c5",
     goalId: "2",
     amount: 400,
-    date: new Date("2023-05-01"),
+    date: new Date("2023-05-01").toISOString(),
     type: "Cash",
     purpose: "Education",
     contributor: "Carlos Diaz",
@@ -89,7 +89,7 @@ const sampleContributions = [
     id: "c6",
     goalId: "3",
     amount: 1000,
-    date: new Date("2023-05-10"),
+    date: new Date("2023-05-10").toISOString(),
     type: "Remittance",
     purpose: "Housing",
     contributor: "Roberto Flores",
@@ -98,7 +98,7 @@ const sampleContributions = [
     id: "c7",
     goalId: "3",
     amount: 600,
-    date: new Date("2023-04-20"),
+    date: new Date("2023-04-20").toISOString(),
     type: "Cash",
     purpose: "Housing",
     contributor: "Lucia Morales",
@@ -119,6 +119,9 @@ const Index = () => {
     if (!sessionStorage.getItem('userContributions')) {
       sessionStorage.setItem('userContributions', JSON.stringify(sampleContributions));
     }
+    
+    // Always ensure the contributions are stored
+    sessionStorage.setItem('userContributions', JSON.stringify(sampleContributions));
     
     // Redirect to splash page
     navigate("/splash");

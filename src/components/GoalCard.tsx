@@ -41,6 +41,11 @@ const GoalCard = ({ id, name, category, amount, progress, onClick, className }: 
         return "bg-purple-100 text-purple-600";
     }
   };
+  
+  // Format number with commas
+  const formatNumber = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
 
   return (
     <div 
@@ -60,7 +65,7 @@ const GoalCard = ({ id, name, category, amount, progress, onClick, className }: 
           <span className="text-tandemi-neutral-gray">
             {t("goal_details.progress")}
           </span>
-          <span className="font-medium">${progress.toFixed(0)} / ${amount.toFixed(0)}</span>
+          <span className="font-medium">${formatNumber(progress.toFixed(0))} / ${formatNumber(amount.toFixed(0))}</span>
         </div>
         <div className="w-full bg-tandemi-soft-gray rounded-full h-2">
           <div 

@@ -28,6 +28,11 @@ const ContributionItem = ({ amount, date, type, purpose, contributor, note }: Co
         return "bg-gray-100 text-gray-600";
     }
   };
+  
+  // Format number with commas
+  const formatNumber = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
 
   return (
     <div className="bg-white rounded-xl p-4 shadow-sm mb-3">
@@ -37,7 +42,7 @@ const ContributionItem = ({ amount, date, type, purpose, contributor, note }: Co
             <DollarSign className="h-5 w-5 text-tandemi-pink" />
           </div>
           <div>
-            <p className="font-medium">${amount.toFixed(2)}</p>
+            <p className="font-medium">${formatNumber(amount.toFixed(2))}</p>
             <p className="text-sm text-tandemi-neutral-gray">{contributor}</p>
           </div>
         </div>

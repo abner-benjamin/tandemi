@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -118,6 +119,11 @@ const GoalDetailPage = () => {
   // Filter family members for this goal
   const goalFamilyMembers = sampleFamilyMembers.filter(f => f.goalId === id);
   
+  // Format number with commas
+  const formatNumber = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+  
   // If this is a new goal without these fields, add them
   useEffect(() => {
     if (!goal.dueDate) {
@@ -131,9 +137,19 @@ const GoalDetailPage = () => {
   const progressPercentage = Math.min(100, (goal.progress / goal.amount) * 100);
   const remainingAmount = Math.max(0, goal.amount - goal.progress);
   
-  // Convert string date to Date object if needed
-  const dueDate = goal.dueDate instanceof Date ? 
-    goal.dueDate : new Date(goal.dueDate);
+  // Convert string date to Date object if needed and ensure it's valid
+  let dueDate;
+  try {
+    dueDate = goal.dueDate instanceof Date ? 
+      goal.dueDate : new Date(goal.dueDate);
+    
+    // Check if date is valid
+    if (isNaN(dueDate.getTime())) {
+      dueDate = new Date(); // Default to today if invalid
+    }
+  } catch (e) {
+    dueDate = new Date(); // Default to today if any error occurs
+  }
 
   return (
     <div className="min-h-screen bg-tandemi-light-gray animate-fade-in max-w-lg mx-auto">
@@ -163,17 +179,17 @@ const GoalDetailPage = () => {
           <div className="flex justify-between items-center">
             <div>
               <p className="text-xs text-tandemi-neutral-gray">{t("goal_details.target")}</p>
-              <p className="font-semibold">${goal.amount.toFixed(0)}</p>
+              <p className="font-semibold">${formatNumber(goal.amount.toFixed(0))}</p>
             </div>
             
             <div className="text-center">
               <p className="text-xs text-tandemi-neutral-gray">{t("goal_details.progress")}</p>
-              <p className="font-semibold">${goal.progress.toFixed(0)}</p>
+              <p className="font-semibold">${formatNumber(goal.progress.toFixed(0))}</p>
             </div>
             
             <div className="text-right">
               <p className="text-xs text-tandemi-neutral-gray">{t("goal_details.remaining")}</p>
-              <p className="font-semibold">${remainingAmount.toFixed(0)}</p>
+              <p className="font-semibold">${formatNumber(remainingAmount.toFixed(0))}</p>
             </div>
           </div>
         </div>
