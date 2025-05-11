@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useAuth } from "../contexts/AuthContext";
+import { Plus } from "lucide-react";
 import TandemiLogo from "../components/TandemiLogo";
 import GoalCard from "../components/GoalCard";
 import LanguageToggle from "../components/LanguageToggle";
 import FamilyContributionsChart from "../components/FamilyContributionsChart";
+import { Button } from "@/components/ui/button";
 
 // Sample data for the goals (fallback if sessionStorage is empty)
 const sampleGoals = [
@@ -86,7 +88,7 @@ const DashboardPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-tandemi-light-gray animate-fade-in max-w-lg mx-auto">
+    <div className="min-h-screen bg-tandemi-light-gray animate-fade-in max-w-lg mx-auto relative pb-24">
       <div className="p-4 flex justify-between items-center">
         <TandemiLogo size="sm" />
         <div className="flex items-center gap-2">
@@ -101,13 +103,6 @@ const DashboardPage = () => {
         
         {/* Family Contributions Chart */}
         <FamilyContributionsChart />
-        
-        <button 
-          className="button-primary w-full my-6"
-          onClick={() => navigate("/create-goal")}
-        >
-          {t("dashboard.create_goal")}
-        </button>
         
         <h2 className="font-semibold text-lg mb-4">{t("dashboard.your_goals")}</h2>
         
@@ -131,6 +126,14 @@ const DashboardPage = () => {
           )}
         </div>
       </div>
+      
+      {/* Floating Action Button */}
+      <Button 
+        className="fixed bottom-6 right-6 rounded-full w-14 h-14 shadow-lg flex items-center justify-center bg-tandemi-pink hover:bg-opacity-90"
+        onClick={() => navigate("/create-goal")}
+      >
+        <Plus size={24} />
+      </Button>
     </div>
   );
 };

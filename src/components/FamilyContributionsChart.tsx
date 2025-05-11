@@ -23,10 +23,18 @@ const FamilyContributionsChart = () => {
   const data = generateContributionData();
   const totalContributions = calculateTotalContributions(data);
   
+  // Format week labels based on language
+  const formattedData = data.map(item => ({
+    ...item,
+    week: language === "en" 
+      ? item.week.replace("Week", "Wk") 
+      : item.week.replace("Week", "Sem.")
+  }));
+  
   return (
     <div className="bg-white rounded-2xl p-4 card-shadow mb-6 mt-6">
       <h3 className="text-base font-semibold mb-2">
-        {t("dashboard.contributions_chart_simple")}
+        {t("dashboard.contributions_chart_title")}
       </h3>
       
       <div className="w-full">
@@ -34,17 +42,20 @@ const FamilyContributionsChart = () => {
           config={{
             area: {
               theme: {
-                light: "#4CAF50", // Education tab green
-                dark: "#4CAF50"
+                light: "#1976D2",
+                dark: "#1976D2"
               }
             }
           }}
         >
-          <AreaChart data={data} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
+          <AreaChart 
+            data={formattedData} 
+            margin={{ top: 5, right: 10, left: -20, bottom: 15 }}
+          >
             <defs>
               <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#4CAF50" stopOpacity={0.8}/>
-                <stop offset="95%" stopColor="#4CAF50" stopOpacity={0.1}/>
+                <stop offset="5%" stopColor="#1976D2" stopOpacity={0.8}/>
+                <stop offset="95%" stopColor="#1976D2" stopOpacity={0.1}/>
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -53,6 +64,7 @@ const FamilyContributionsChart = () => {
               tick={{ fontSize: 10 }}
               tickLine={false}
               axisLine={false}
+              dy={5}
             />
             <YAxis 
               tick={{ fontSize: 10 }} 
@@ -67,7 +79,7 @@ const FamilyContributionsChart = () => {
                   return (
                     <div className="bg-white p-2 border border-gray-200 shadow-md rounded-md">
                       <p className="text-xs font-medium">{data.week}</p>
-                      <p className="text-xs text-green-600">${formatNumber(data.amount)}</p>
+                      <p className="text-xs text-blue-600">${formatNumber(data.amount)}</p>
                     </div>
                   );
                 }
@@ -77,7 +89,7 @@ const FamilyContributionsChart = () => {
             <Area 
               type="monotone" 
               dataKey="amount" 
-              stroke="#4CAF50" 
+              stroke="#1976D2" 
               fillOpacity={1} 
               fill="url(#colorAmount)" 
             />
@@ -85,12 +97,12 @@ const FamilyContributionsChart = () => {
         </ChartContainer>
       </div>
       
-      <div className="mt-4 mb-2">
+      <div className="mt-2 mb-2">
         <Separator className="bg-gray-200" />
       </div>
       
       <p className="text-left text-sm mt-3 font-medium">
-        <span className="text-green-600">${formatNumber(totalContributions)}</span> <span className="text-tandemi-neutral-gray">{t("dashboard.total_contributions")}</span>
+        <span className="text-blue-600">${formatNumber(totalContributions)}</span> <span className="text-tandemi-neutral-gray">{t("dashboard.total_contributions")}</span>
       </p>
     </div>
   );

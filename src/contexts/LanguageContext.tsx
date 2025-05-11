@@ -68,15 +68,19 @@ const translations = {
   },
   "dashboard.contributions_chart": {
     en: "Family Contributions Over Time",
-    es: "Aportes de la familia con el tiempo"
+    es: "Historial de contribuciones familiares"
   },
   "dashboard.contributions_chart_simple": {
     en: "Family Contributions",
-    es: "Aportes de la familia"
+    es: "Contribuciones familiares"
+  },
+  "dashboard.contributions_chart_title": {
+    en: "Contribution History",
+    es: "Historial de contribuciones"
   },
   "dashboard.total_contributions": {
     en: "contributed across all goals",
-    es: "aportados entre todas las metas"
+    es: "contribuidos entre todas las metas"
   },
   // Goal Categories
   "category.medical": {
