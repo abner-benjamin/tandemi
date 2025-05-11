@@ -16,6 +16,7 @@ import {
   XAxis,
   YAxis
 } from "recharts";
+import { Separator } from "@/components/ui/separator";
 
 const FamilyContributionsChart = () => {
   const { t, language } = useLanguage();
@@ -23,9 +24,9 @@ const FamilyContributionsChart = () => {
   const totalContributions = calculateTotalContributions(data);
   
   return (
-    <div className="bg-white rounded-2xl p-4 card-shadow mb-6">
-      <h3 className="text-lg font-semibold mb-2">
-        {t("dashboard.contributions_chart")}
+    <div className="bg-white rounded-2xl p-4 card-shadow mb-6 mt-6">
+      <h3 className="text-base font-semibold mb-2">
+        {t("dashboard.contributions_chart_simple")}
       </h3>
       
       <div className="h-40 w-full">
@@ -33,8 +34,8 @@ const FamilyContributionsChart = () => {
           config={{
             area: {
               theme: {
-                light: "#9b87f5",
-                dark: "#9b87f5"
+                light: "#1976D2",
+                dark: "#1976D2"
               }
             }
           }}
@@ -42,8 +43,8 @@ const FamilyContributionsChart = () => {
           <AreaChart data={data} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
             <defs>
               <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#9b87f5" stopOpacity={0.8}/>
-                <stop offset="95%" stopColor="#9b87f5" stopOpacity={0.1}/>
+                <stop offset="5%" stopColor="#1976D2" stopOpacity={0.8}/>
+                <stop offset="95%" stopColor="#1976D2" stopOpacity={0.1}/>
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -66,7 +67,7 @@ const FamilyContributionsChart = () => {
                   return (
                     <div className="bg-white p-2 border border-gray-200 shadow-md rounded-md">
                       <p className="text-xs font-medium">{data.week}</p>
-                      <p className="text-xs text-tandemi-pink">${formatNumber(data.amount)}</p>
+                      <p className="text-xs text-blue-600">${formatNumber(data.amount)}</p>
                     </div>
                   );
                 }
@@ -76,7 +77,7 @@ const FamilyContributionsChart = () => {
             <Area 
               type="monotone" 
               dataKey="amount" 
-              stroke="#9b87f5" 
+              stroke="#1976D2" 
               fillOpacity={1} 
               fill="url(#colorAmount)" 
             />
@@ -84,7 +85,9 @@ const FamilyContributionsChart = () => {
         </ChartContainer>
       </div>
       
-      <p className="text-center text-sm mt-2 text-tandemi-neutral-gray">
+      <Separator className="my-2" />
+      
+      <p className="text-left text-sm mt-2 font-medium text-blue-600">
         ${formatNumber(totalContributions)} {t("dashboard.total_contributions")}
       </p>
     </div>

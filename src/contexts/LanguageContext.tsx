@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState, ReactNode } from "react";
 
 type LanguageContextType = {
@@ -70,6 +69,10 @@ const translations = {
   "dashboard.contributions_chart": {
     en: "Family Contributions Over Time",
     es: "Aportes de la familia con el tiempo"
+  },
+  "dashboard.contributions_chart_simple": {
+    en: "Family Contributions",
+    es: "Aportes de la familia"
   },
   "dashboard.total_contributions": {
     en: "contributed across all goals",

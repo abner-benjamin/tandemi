@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -96,7 +95,7 @@ const sampleContributions = [
 ];
 
 const GoalDetailPage = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
@@ -191,6 +190,31 @@ const GoalDetailPage = () => {
   const formatNumber = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
+  
+  // Update goal progress based on contributions
+  useEffect(() => {
+    if (goalContributions.length > 0) {
+      const totalContributed = goalContributions.reduce((sum, c) => sum + (Number(c.amount) || 0), 0);
+      
+      // Only update if we need to
+      if (goal.progress !== totalContributed) {
+        // Update local state
+        goal.progress = totalContributed;
+        
+        // Update in session storage if needed
+        const storedGoals = sessionStorage.getItem('userGoals');
+        if (storedGoals) {
+          const goalsArray = JSON.parse(storedGoals);
+          const targetGoalIndex = goalsArray.findIndex(g => g.id === id);
+          
+          if (targetGoalIndex !== -1) {
+            goalsArray[targetGoalIndex].progress = totalContributed;
+            sessionStorage.setItem('userGoals', JSON.stringify(goalsArray));
+          }
+        }
+      }
+    }
+  }, [goalContributions, id, goal]);
   
   // If this is a new goal without these fields, add them
   useEffect(() => {

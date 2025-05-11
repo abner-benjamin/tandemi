@@ -4,7 +4,7 @@ export const generateContributionData = () => {
   return [
     { week: "Week 1", amount: 400 },
     { week: "Week 2", amount: 250 },
-    { week: "Week 3", amount: 0 },
+    { week: "Week 3", amount: 90 },  // Changed from 0 to 90 for better visual trend
     { week: "Week 4", amount: 350 },
     { week: "Week 5", amount: 500 }
   ];
