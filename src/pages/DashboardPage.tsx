@@ -84,11 +84,6 @@ const DashboardPage = () => {
     };
   }, []);
 
-  // Format all monetary amounts with commas
-  const formatNumber = (num) => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
-
   return (
     <div className="min-h-screen bg-tandemi-light-gray animate-fade-in max-w-lg mx-auto">
       <div className="p-4 flex justify-between items-center">
@@ -123,7 +118,6 @@ const DashboardPage = () => {
                 amount={goal.amount}
                 progress={goal.progress}
                 onClick={() => navigate(`/goal/${goal.id}`)}
-                formatNumber={formatNumber}
               />
             ))
           ) : (
