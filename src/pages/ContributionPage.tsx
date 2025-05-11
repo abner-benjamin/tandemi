@@ -35,7 +35,49 @@ const ContributionPage = () => {
     if (storedContributions) {
       return JSON.parse(storedContributions);
     }
-    return [];
+    
+    // Sample contributions if none exist
+    const sampleContributions = [
+      {
+        id: "c1",
+        goalId: "1",
+        amount: 200,
+        date: new Date("2023-04-15"),
+        type: "cash",
+        purpose: "medical",
+        contributor: "Lucas",
+        note: "Birthday money from Tío Carlos"
+      },
+      {
+        id: "c2",
+        goalId: "1",
+        amount: 500,
+        date: new Date("2023-05-20"),
+        type: "remittance",
+        purpose: "medical",
+        contributor: "María"
+      },
+      {
+        id: "c3",
+        goalId: "2",
+        amount: 300,
+        date: new Date("2023-03-10"),
+        type: "gift",
+        purpose: "education",
+        contributor: "Sofía",
+        note: "For textbooks"
+      },
+      {
+        id: "c4",
+        goalId: "3",
+        amount: 450,
+        date: new Date("2023-05-05"),
+        type: "cash",
+        purpose: "rent",
+        contributor: "Lucas"
+      }
+    ];
+    return sampleContributions;
   });
   
   const [formData, setFormData] = useState({
@@ -53,6 +95,11 @@ const ContributionPage = () => {
 
   const handleSelectChange = (name: string, value: string) => {
     setFormData({ ...formData, [name]: value });
+  };
+  
+  // Format number with commas
+  const formatNumber = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -73,9 +120,9 @@ const ContributionPage = () => {
       goalId: id,
       amount: parseFloat(formData.amount),
       date: new Date(formData.date),
-      type: formData.type || "Cash",
-      purpose: formData.purpose || "Other",
-      contributor: "You",
+      type: formData.type || "cash",
+      purpose: formData.purpose || "other",
+      contributor: "Alex",
       note: formData.note || "",
     };
     
@@ -132,7 +179,7 @@ const ContributionPage = () => {
           </div>
           
           <h1 className="text-2xl font-bold mb-2">{t("contribution.success")}</h1>
-          <p className="text-tandemi-neutral-gray mb-6">${formData.amount} to {goal.name}</p>
+          <p className="text-tandemi-neutral-gray mb-6">${formatNumber(parseFloat(formData.amount))} to {goal.name}</p>
           
           <div className="flex flex-col sm:flex-row gap-3">
             <Button 
@@ -178,7 +225,7 @@ const ContributionPage = () => {
             <span className="text-tandemi-neutral-gray">
               {t("goal_details.progress")}
             </span>
-            <span className="font-medium">${goal.progress} / ${goal.amount}</span>
+            <span className="font-medium">${formatNumber(goal.progress)} / ${formatNumber(goal.amount)}</span>
           </div>
           <div className="w-full bg-tandemi-soft-gray rounded-full h-2 mt-1">
             <div 

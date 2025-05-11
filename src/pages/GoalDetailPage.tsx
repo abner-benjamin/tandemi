@@ -1,5 +1,6 @@
+
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useLanguage } from "../contexts/LanguageContext";
 import BackButton from "../components/BackButton";
@@ -8,20 +9,20 @@ import FamilyMemberItem from "../components/FamilyMemberItem";
 import { Button } from "@/components/ui/button";
 import { DollarSign, Heart } from "lucide-react";
 
-// Sample family members
+// Sample family members - now with updated neutral names
 const sampleFamilyMembers = [
   {
     id: "f1",
     goalId: "1",
-    name: "Juan Perez",
+    name: "Lucas",
     role: "Admin",
     contactMethod: "Email",
-    contactValue: "juan@example.com",
+    contactValue: "lucas@example.com",
   },
   {
     id: "f2",
     goalId: "1",
-    name: "Maria Rodriguez",
+    name: "María",
     role: "Contributor",
     contactMethod: "WhatsApp",
     contactValue: "+1234567890",
@@ -29,15 +30,15 @@ const sampleFamilyMembers = [
   {
     id: "f3",
     goalId: "2",
-    name: "Ana Gomez",
+    name: "Sofía",
     role: "Admin",
     contactMethod: "Email",
-    contactValue: "ana@example.com",
+    contactValue: "sofia@example.com",
   },
   {
     id: "f4",
     goalId: "2",
-    name: "Carlos Diaz",
+    name: "Lucas",
     role: "Viewer",
     contactMethod: "Phone",
     contactValue: "+9876543210",
@@ -45,10 +46,10 @@ const sampleFamilyMembers = [
   {
     id: "f5",
     goalId: "3",
-    name: "Roberto Flores",
+    name: "María",
     role: "Admin",
     contactMethod: "Email",
-    contactValue: "roberto@example.com",
+    contactValue: "maria@example.com",
   },
 ];
 
@@ -61,8 +62,8 @@ const sampleContributions = [
     date: new Date("2023-04-15"),
     type: "cash",
     purpose: "medical",
-    contributor: "Juan Perez",
-    note: "Birthday money from Tio Carlos"
+    contributor: "Lucas",
+    note: "Birthday money from Tío Carlos"
   },
   {
     id: "c2",
@@ -71,7 +72,7 @@ const sampleContributions = [
     date: new Date("2023-05-20"),
     type: "remittance",
     purpose: "medical",
-    contributor: "Maria Rodriguez"
+    contributor: "María"
   },
   {
     id: "c3",
@@ -80,7 +81,7 @@ const sampleContributions = [
     date: new Date("2023-03-10"),
     type: "gift",
     purpose: "education",
-    contributor: "Ana Gomez",
+    contributor: "Sofía",
     note: "For textbooks"
   },
   {
@@ -90,7 +91,7 @@ const sampleContributions = [
     date: new Date("2023-05-05"),
     type: "cash",
     purpose: "rent",
-    contributor: "Carlos Diaz"
+    contributor: "Lucas"
   }
 ];
 
@@ -98,7 +99,9 @@ const GoalDetailPage = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const [activeTab, setActiveTab] = useState("overview");
+  const [searchParams] = useSearchParams();
+  const tabParam = searchParams.get('tab');
+  const [activeTab, setActiveTab] = useState(tabParam || "overview");
   
   // Get goals from sessionStorage
   const [goals, setGoals] = useState(() => {
@@ -118,6 +121,15 @@ const GoalDetailPage = () => {
     return sampleContributions;
   });
   
+  // Get family members from sessionStorage or initialize with sample data
+  const [familyMembers, setFamilyMembers] = useState(() => {
+    const storedFamilyMembers = sessionStorage.getItem('familyMembers');
+    if (storedFamilyMembers) {
+      return JSON.parse(storedFamilyMembers);
+    }
+    return sampleFamilyMembers;
+  });
+  
   // Listen for changes in sessionStorage
   useEffect(() => {
     const handleStorageChange = () => {
@@ -133,6 +145,14 @@ const GoalDetailPage = () => {
         // If for some reason contributions are empty, add sample contributions
         sessionStorage.setItem('userContributions', JSON.stringify(sampleContributions));
         setContributions(sampleContributions);
+      }
+      
+      const storedFamilyMembers = sessionStorage.getItem('familyMembers');
+      if (storedFamilyMembers) {
+        setFamilyMembers(JSON.parse(storedFamilyMembers));
+      } else {
+        sessionStorage.setItem('familyMembers', JSON.stringify(sampleFamilyMembers));
+        setFamilyMembers(sampleFamilyMembers);
       }
     };
     
@@ -165,7 +185,7 @@ const GoalDetailPage = () => {
   const goalContributions = contributions.filter(c => c.goalId === id);
   
   // Filter family members for this goal
-  const goalFamilyMembers = sampleFamilyMembers.filter(f => f.goalId === id);
+  const goalFamilyMembers = familyMembers.filter(f => f.goalId === id);
   
   // Format number with commas
   const formatNumber = (num) => {
@@ -203,7 +223,9 @@ const GoalDetailPage = () => {
     <div className="min-h-screen bg-tandemi-light-gray animate-fade-in max-w-lg mx-auto">
       <div className="p-4 flex items-center">
         <BackButton className="mr-auto" to="/dashboard" />
-        <h1 className="text-lg font-bold truncate max-w-[200px]">{goal.name}</h1>
+        <h1 className="text-lg font-bold truncate max-w-[200px] mx-auto overflow-x-auto whitespace-nowrap">
+          {goal.name}
+        </h1>
         <div className="w-10"></div> {/* Spacer for centering title */}
       </div>
       
@@ -245,7 +267,7 @@ const GoalDetailPage = () => {
       
       <div className="p-4">
         <Tabs
-          defaultValue="overview"
+          value={activeTab}
           onValueChange={setActiveTab}
           className="w-full"
         >
@@ -360,18 +382,6 @@ const GoalDetailPage = () => {
           </TabsContent>
         </Tabs>
       </div>
-      
-      {activeTab === "contributions" && (
-        <div className="fixed bottom-4 left-0 right-0 flex justify-center">
-          <Button
-            className="button-primary mx-auto max-w-lg px-8"
-            onClick={() => navigate(`/goal/${id}/contribute`)}
-          >
-            <DollarSign className="h-4 w-4 mr-1" />
-            {t("goal_details.log_contribution")}
-          </Button>
-        </div>
-      )}
     </div>
   );
 };

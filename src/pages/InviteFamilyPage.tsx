@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
 import BackButton from "../components/BackButton";
@@ -10,38 +10,61 @@ import { Check, Heart } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-// Sample data for the goals
-const sampleGoals = [
-  {
-    id: "1",
-    name: "Abuelita's Surgery Fund",
-    category: "Medical",
-    amount: 2500,
-    progress: 1750,
-  },
-  {
-    id: "2",
-    name: "Spring Tuition for Sofia",
-    category: "Education",
-    amount: 1800,
-    progress: 900,
-  },
-  {
-    id: "3",
-    name: "House Repair in Puebla",
-    category: "Housing",
-    amount: 3000,
-    progress: 2100,
-  }
-];
-
 const InviteFamilyPage = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [isSuccess, setIsSuccess] = useState(false);
+  const [goals, setGoals] = useState([]);
+  const [familyMembers, setFamilyMembers] = useState([]);
   
-  const goal = sampleGoals.find((g) => g.id === id);
+  // Load data from sessionStorage on mount
+  useEffect(() => {
+    // Get goals
+    const storedGoals = sessionStorage.getItem('userGoals');
+    if (storedGoals) {
+      setGoals(JSON.parse(storedGoals));
+    }
+    
+    // Get family members
+    const storedFamilyMembers = sessionStorage.getItem('familyMembers');
+    if (storedFamilyMembers) {
+      setFamilyMembers(JSON.parse(storedFamilyMembers));
+    } else {
+      // Initialize with sample family members if none exist
+      const sampleFamilyMembers = [
+        {
+          id: "f1",
+          goalId: "1",
+          name: "Lucas",
+          role: "Admin",
+          contactMethod: "Email",
+          contactValue: "lucas@example.com",
+        },
+        {
+          id: "f2",
+          goalId: "1",
+          name: "María",
+          role: "Contributor",
+          contactMethod: "WhatsApp",
+          contactValue: "+1234567890",
+        },
+        {
+          id: "f3",
+          goalId: "2",
+          name: "Sofía",
+          role: "Admin",
+          contactMethod: "Email",
+          contactValue: "sofia@example.com",
+        }
+      ];
+      sessionStorage.setItem('familyMembers', JSON.stringify(sampleFamilyMembers));
+      setFamilyMembers(sampleFamilyMembers);
+    }
+  }, []);
+  
+  // Find current goal
+  const goal = goals.find(g => g.id === id);
   
   const [formData, setFormData] = useState({
     name: "",
@@ -62,6 +85,27 @@ const InviteFamilyPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!goal) {
+      navigate("/dashboard");
+      return;
+    }
+    
+    // Create new family member
+    const newMember = {
+      id: `family-${Date.now()}`,
+      goalId: id,
+      name: formData.name,
+      role: formData.role || "Contributor",
+      contactMethod: formData.contactMethod || "Email",
+      contactValue: formData.contactValue,
+    };
+    
+    // Add to family members in sessionStorage
+    const updatedFamilyMembers = [...familyMembers, newMember];
+    sessionStorage.setItem('familyMembers', JSON.stringify(updatedFamilyMembers));
+    setFamilyMembers(updatedFamilyMembers);
+    
     setIsSuccess(true);
     
     setTimeout(() => {
@@ -70,7 +114,20 @@ const InviteFamilyPage = () => {
   };
   
   if (!goal) {
-    return <div>Goal not found</div>;
+    return (
+      <div className="min-h-screen bg-tandemi-light-gray p-4 flex flex-col items-center justify-center animate-fade-in max-w-lg mx-auto">
+        <div className="bg-white rounded-2xl p-6 shadow-md w-full max-w-md text-center">
+          <h1 className="text-xl font-bold mb-2">{t("common.error")}</h1>
+          <p className="mb-6">{t("common.goal_not_found")}</p>
+          <Button 
+            className="button-primary" 
+            onClick={() => navigate("/dashboard")}
+          >
+            {t("common.return_to_dashboard")}
+          </Button>
+        </div>
+      </div>
+    );
   }
   
   if (isSuccess) {
@@ -197,7 +254,7 @@ const InviteFamilyPage = () => {
           </div>
           
           <Button type="submit" className="button-primary w-full">
-            {t("common.send")}
+            {t("family.add_member")}
           </Button>
         </form>
       </div>

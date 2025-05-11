@@ -39,9 +39,12 @@ const sampleGoals = [
 ];
 
 const DashboardPage = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { user } = useAuth();
   const navigate = useNavigate();
+  
+  // Override the user name with "Alex"
+  const userName = "Alex";
   
   // Get goals from sessionStorage
   const [goals, setGoals] = useState(() => {
@@ -81,6 +84,11 @@ const DashboardPage = () => {
     };
   }, []);
 
+  // Format all monetary amounts with commas
+  const formatNumber = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   return (
     <div className="min-h-screen bg-tandemi-light-gray animate-fade-in max-w-lg mx-auto">
       <div className="p-4 flex justify-between items-center">
@@ -92,7 +100,7 @@ const DashboardPage = () => {
       
       <div className="p-4">
         <h1 className="text-2xl font-bold">
-          {t("dashboard.welcome")}, {user?.name}!
+          {language === "es" ? `¡${t("dashboard.welcome")}, ${userName}!` : `${t("dashboard.welcome")}, ${userName}!`}
         </h1>
         
         <button 
@@ -115,6 +123,7 @@ const DashboardPage = () => {
                 amount={goal.amount}
                 progress={goal.progress}
                 onClick={() => navigate(`/goal/${goal.id}`)}
+                formatNumber={formatNumber}
               />
             ))
           ) : (

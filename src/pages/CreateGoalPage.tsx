@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -31,6 +32,11 @@ const CreateGoalPage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  // Format number with commas
+  const formatNumber = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -41,6 +47,8 @@ const CreateGoalPage = () => {
       category: formData.category || "Other",
       amount: parseFloat(formData.amount) || 0,
       progress: 0, // New goals start with 0 progress
+      dueDate: formData.date || new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString(),
+      description: formData.description || "No description provided",
     };
     
     // Add new goal to sessionStorage
@@ -58,6 +66,8 @@ const CreateGoalPage = () => {
           category: "Medical",
           amount: 2500,
           progress: 1750,
+          dueDate: new Date("2023-12-31").toISOString(),
+          description: "Fund for grandmother's knee surgery in Mexico City",
         },
         {
           id: "2",
@@ -65,6 +75,8 @@ const CreateGoalPage = () => {
           category: "Education",
           amount: 1800,
           progress: 900,
+          dueDate: new Date("2023-09-01").toISOString(),
+          description: "College tuition payment for Sofia's spring semester",
         },
         {
           id: "3",
@@ -72,6 +84,8 @@ const CreateGoalPage = () => {
           category: "Housing",
           amount: 3000,
           progress: 2100,
+          dueDate: new Date("2023-11-15").toISOString(),
+          description: "Roof repairs and painting for the family home in Puebla",
         }
       ];
     }
@@ -160,7 +174,7 @@ const CreateGoalPage = () => {
                 value={formData.date}
                 onChange={handleChange}
               />
-              <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <Calendar className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
             </div>
           </div>
           
@@ -171,11 +185,11 @@ const CreateGoalPage = () => {
                 <SelectValue placeholder={t("create_goal.category_placeholder")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="medical">{t("category.medical")}</SelectItem>
-                <SelectItem value="education">{t("category.education")}</SelectItem>
-                <SelectItem value="housing">{t("category.housing")}</SelectItem>
-                <SelectItem value="travel">{t("category.travel")}</SelectItem>
-                <SelectItem value="other">{t("category.other")}</SelectItem>
+                <SelectItem value="Medical">{t("category.medical")}</SelectItem>
+                <SelectItem value="Education">{t("category.education")}</SelectItem>
+                <SelectItem value="Housing">{t("category.housing")}</SelectItem>
+                <SelectItem value="Travel">{t("category.travel")}</SelectItem>
+                <SelectItem value="Other">{t("category.other")}</SelectItem>
               </SelectContent>
             </Select>
           </div>

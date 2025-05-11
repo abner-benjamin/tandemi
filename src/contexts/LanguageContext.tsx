@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useState, ReactNode } from "react";
 
 type LanguageContextType = {
@@ -33,10 +34,26 @@ const translations = {
     en: "Done",
     es: "Listo"
   },
+  "common.send": {
+    en: "Send",
+    es: "Enviar"
+  },
+  "common.error": {
+    en: "Error",
+    es: "Error"
+  },
+  "common.goal_not_found": {
+    en: "Goal not found",
+    es: "Meta no encontrada"
+  },
+  "common.return_to_dashboard": {
+    en: "Return to Dashboard",
+    es: "Volver al Panel"
+  },
   // Dashboard
   "dashboard.welcome": {
     en: "Welcome",
-    es: "Bienvenido/a"
+    es: "Bienvenido"
   },
   "dashboard.create_goal": {
     en: "Create New Goal",
@@ -45,6 +62,10 @@ const translations = {
   "dashboard.your_goals": {
     en: "Your Goals",
     es: "Tus Metas"
+  },
+  "dashboard.no_goals": {
+    en: "You don't have any goals yet. Create your first goal to get started.",
+    es: "Aún no tienes metas. Crea tu primera meta para comenzar."
   },
   // Goal Categories
   "category.medical": {
@@ -282,6 +303,10 @@ const translations = {
   "family.return_to_goal": {
     en: "Return to Goal",
     es: "Volver a la Meta"
+  },
+  "family.add_member": {
+    en: "Add Member",
+    es: "Agregar miembro"
   }
 };
 
