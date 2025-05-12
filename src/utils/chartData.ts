@@ -14,3 +14,14 @@ export const generateContributionData = () => {
 export const calculateTotalContributions = (data: { amount: number }[]) => {
   return data.reduce((total, item) => total + item.amount, 0);
 };
+
+// Get contributions by goal id
+export const getContributionsByGoalId = (goalId: string, contributions: any[]) => {
+  return contributions.filter(c => c.goalId === goalId);
+};
+
+// Calculate total amount for a specific goal
+export const calculateGoalTotal = (goalId: string, contributions: any[]) => {
+  const goalContributions = getContributionsByGoalId(goalId, contributions);
+  return goalContributions.reduce((total, item) => total + item.amount, 0);
+};

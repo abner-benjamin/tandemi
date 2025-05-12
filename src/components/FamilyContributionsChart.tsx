@@ -50,8 +50,8 @@ const FamilyContributionsChart = () => {
         >
           <AreaChart 
             data={formattedData} 
-            margin={{ top: 5, right: 10, left: -20, bottom: 5 }}
-            height={180}
+            margin={{ top: 5, right: 10, left: -20, bottom: 0 }}
+            height={160}
           >
             <defs>
               <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
@@ -98,7 +98,7 @@ const FamilyContributionsChart = () => {
         </ChartContainer>
       </div>
       
-      <div className="mt-1 mb-1">
+      <div className="mt-0">
         <Separator className="bg-gray-200" />
       </div>
       

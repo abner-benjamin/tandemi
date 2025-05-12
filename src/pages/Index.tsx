@@ -12,7 +12,7 @@ const sampleGoals = [
     name: "Abuelita's Surgery Fund",
     category: "Medical",
     amount: 2500,
-    progress: 1150, // Updated: $500 + $350 + $100 + $90 + $110 = $1150
+    progress: 1150, // $500 + $350 + $100 + $90 + $110 = $1150
     dueDate: new Date("2023-12-31").toISOString(),
     description: "Fund for grandmother's knee surgery in Mexico City",
   },
@@ -21,7 +21,7 @@ const sampleGoals = [
     name: "Spring Tuition for Sofia",
     category: "Education",
     amount: 1800,
-    progress: 1125, // Updated: $500 + $500 + $75 + $50 = $1125
+    progress: 1125, // $500 + $500 + $75 + $50 = $1125
     dueDate: new Date("2023-09-01").toISOString(),
     description: "College tuition payment for Sofia's spring semester",
   },
@@ -30,14 +30,15 @@ const sampleGoals = [
     name: "House Repair in Puebla",
     category: "Housing",
     amount: 3000,
-    progress: 1160, // Updated: $400 + $500 + $60 + $80 + $120 = $1160
+    progress: 1160, // $400 + $500 + $60 + $80 + $120 = $1160
     dueDate: new Date("2023-11-15").toISOString(),
     description: "Roof repairs and painting for the family home in Puebla",
   }
 ];
 
-// Sample contributions data - updated to match the new contribution data
+// Sample contributions data
 const sampleContributions = [
+  // Abuelita's Surgery Fund (id: 1)
   {
     id: "c1",
     goalId: "1",
@@ -88,6 +89,8 @@ const sampleContributions = [
     contributor: "María",
     note: "Transportation costs",
   },
+  
+  // House Repair in Puebla (id: 3)
   {
     id: "c6",
     goalId: "3",
@@ -138,6 +141,8 @@ const sampleContributions = [
     contributor: "Alex",
     note: "Tool purchases",
   },
+  
+  // Spring Tuition for Sofia (id: 2)
   {
     id: "c11",
     goalId: "2",
@@ -184,10 +189,10 @@ const Index = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    // Always initialize session storage with sample goals
+    // Initialize session storage with sample goals
     sessionStorage.setItem('userGoals', JSON.stringify(sampleGoals));
     
-    // Always initialize session storage with sample contributions
+    // Initialize session storage with sample contributions
     sessionStorage.setItem('userContributions', JSON.stringify(sampleContributions));
     
     // Redirect to splash page

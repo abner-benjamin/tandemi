@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -7,6 +8,7 @@ import ContributionItem from "../components/ContributionItem";
 import FamilyMemberItem from "../components/FamilyMemberItem";
 import { Button } from "@/components/ui/button";
 import { DollarSign, Heart } from "lucide-react";
+import { getContributionsByGoalId } from "../utils/chartData";
 
 // Sample family members - now with updated neutral names
 const sampleFamilyMembers = [
@@ -54,44 +56,79 @@ const sampleFamilyMembers = [
 
 // Sample contributions if none exist in session storage
 const sampleContributions = [
+  // Abuelita's Surgery Fund (id: 1)
   {
     id: "c1",
     goalId: "1",
-    amount: 200,
-    date: new Date("2023-04-15"),
-    type: "cash",
-    purpose: "medical",
+    amount: 500,
+    date: new Date("2023-05-15"),
+    type: "Remittance",
+    purpose: "Medical",
     contributor: "Lucas",
-    note: "Birthday money from Tío Carlos"
+    note: "Medical support",
   },
   {
     id: "c2",
     goalId: "1",
-    amount: 500,
-    date: new Date("2023-05-20"),
-    type: "remittance",
-    purpose: "medical",
-    contributor: "María"
+    amount: 350,
+    date: new Date("2023-05-03"),
+    type: "Cash",
+    purpose: "Meds",
+    contributor: "María",
+    note: "Medication expenses",
   },
   {
     id: "c3",
-    goalId: "2",
-    amount: 300,
-    date: new Date("2023-03-10"),
-    type: "gift",
-    purpose: "education",
-    contributor: "Sofía",
-    note: "For textbooks"
+    goalId: "1",
+    amount: 100,
+    date: new Date("2023-05-02"),
+    type: "Gift",
+    purpose: "General support",
+    contributor: "Elena",
+    note: "General support",
   },
   {
     id: "c4",
-    goalId: "3",
-    amount: 450,
+    goalId: "1",
+    amount: 90,
+    date: new Date("2023-05-04"),
+    type: "Remittance",
+    purpose: "Pharmacy",
+    contributor: "Elena",
+    note: "Pharmacy expenses",
+  },
+  {
+    id: "c5",
+    goalId: "1",
+    amount: 110,
     date: new Date("2023-05-05"),
-    type: "cash",
-    purpose: "rent",
-    contributor: "Lucas"
-  }
+    type: "Cash",
+    purpose: "Transportation",
+    contributor: "María",
+    note: "Transportation costs",
+  },
+  
+  // House Repair in Puebla (id: 3)
+  {
+    id: "c6",
+    goalId: "3",
+    amount: 400,
+    date: new Date("2023-05-01"),
+    type: "Remittance",
+    purpose: "Repair",
+    contributor: "Alex",
+    note: "Initial repairs",
+  },
+  {
+    id: "c7",
+    goalId: "3",
+    amount: 500,
+    date: new Date("2023-05-04"),
+    type: "Cash",
+    purpose: "Construction",
+    contributor: "Alex",
+    note: "Construction materials",
+  },
 ];
 
 const GoalDetailPage = () => {
