@@ -189,6 +189,10 @@ const translations = {
     en: "No description provided for this goal.",
     es: "No se proporcionó descripción para esta meta."
   },
+  "goal_details.view_all": {
+    en: "View all",
+    es: "Ver todo"
+  },
   // Contribution
   "contribution.title": {
     en: "Log Contribution",
