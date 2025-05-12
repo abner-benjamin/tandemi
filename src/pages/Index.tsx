@@ -13,7 +13,7 @@ const sampleGoals = [
     category: "Medical",
     amount: 2500,
     progress: 1150, // $500 + $350 + $100 + $90 + $110 = $1150
-    dueDate: new Date("2023-12-31").toISOString(),
+    dueDate: new Date("2025-12-31").toISOString(),
     description: "Fund for grandmother's knee surgery in Mexico City",
   },
   {
@@ -22,7 +22,7 @@ const sampleGoals = [
     category: "Education",
     amount: 1800,
     progress: 1125, // $500 + $500 + $75 + $50 = $1125
-    dueDate: new Date("2023-09-01").toISOString(),
+    dueDate: new Date("2025-09-01").toISOString(),
     description: "College tuition payment for Sofia's spring semester",
   },
   {
@@ -31,7 +31,7 @@ const sampleGoals = [
     category: "Housing",
     amount: 3000,
     progress: 1160, // $400 + $500 + $60 + $80 + $120 = $1160
-    dueDate: new Date("2023-11-15").toISOString(),
+    dueDate: new Date("2025-11-15").toISOString(),
     description: "Roof repairs and painting for the family home in Puebla",
   }
 ];
@@ -43,7 +43,7 @@ const sampleContributions = [
     id: "c1",
     goalId: "1",
     amount: 500,
-    date: new Date("2023-05-15").toISOString(),
+    date: new Date("2025-05-05").toISOString(), // Week 1
     type: "Remittance",
     purpose: "Medical",
     contributor: "Lucas",
@@ -53,7 +53,7 @@ const sampleContributions = [
     id: "c2",
     goalId: "1",
     amount: 350,
-    date: new Date("2023-05-03").toISOString(),
+    date: new Date("2025-05-18").toISOString(), // Week 3
     type: "Cash",
     purpose: "Meds",
     contributor: "María",
@@ -63,7 +63,7 @@ const sampleContributions = [
     id: "c3",
     goalId: "1",
     amount: 100,
-    date: new Date("2023-05-02").toISOString(),
+    date: new Date("2025-05-10").toISOString(), // Week 2
     type: "Gift",
     purpose: "General support",
     contributor: "Elena",
@@ -73,7 +73,7 @@ const sampleContributions = [
     id: "c4",
     goalId: "1",
     amount: 90,
-    date: new Date("2023-05-04").toISOString(),
+    date: new Date("2025-05-25").toISOString(), // Week 4
     type: "Remittance",
     purpose: "Pharmacy",
     contributor: "Elena",
@@ -83,7 +83,7 @@ const sampleContributions = [
     id: "c5",
     goalId: "1",
     amount: 110,
-    date: new Date("2023-05-05").toISOString(),
+    date: new Date("2025-06-02").toISOString(), // Week 5
     type: "Cash",
     purpose: "Transportation",
     contributor: "María",
@@ -95,7 +95,7 @@ const sampleContributions = [
     id: "c6",
     goalId: "3",
     amount: 400,
-    date: new Date("2023-05-01").toISOString(),
+    date: new Date("2025-05-05").toISOString(), // Week 1
     type: "Remittance",
     purpose: "Repair",
     contributor: "Alex",
@@ -105,7 +105,7 @@ const sampleContributions = [
     id: "c7",
     goalId: "3",
     amount: 500,
-    date: new Date("2023-05-04").toISOString(),
+    date: new Date("2025-05-25").toISOString(), // Week 4
     type: "Cash",
     purpose: "Construction",
     contributor: "Alex",
@@ -115,7 +115,7 @@ const sampleContributions = [
     id: "c8",
     goalId: "3",
     amount: 60,
-    date: new Date("2023-05-02").toISOString(),
+    date: new Date("2025-05-10").toISOString(), // Week 2
     type: "Cash",
     purpose: "Paint",
     contributor: "Carlos",
@@ -125,7 +125,7 @@ const sampleContributions = [
     id: "c9",
     goalId: "3",
     amount: 80,
-    date: new Date("2023-05-05").toISOString(),
+    date: new Date("2025-06-02").toISOString(), // Week 5
     type: "Remittance",
     purpose: "Electrical work",
     contributor: "Lucas",
@@ -135,7 +135,7 @@ const sampleContributions = [
     id: "c10",
     goalId: "3",
     amount: 120,
-    date: new Date("2023-05-03").toISOString(),
+    date: new Date("2025-05-18").toISOString(), // Week 3
     type: "Gift",
     purpose: "Tools",
     contributor: "Alex",
@@ -147,7 +147,7 @@ const sampleContributions = [
     id: "c11",
     goalId: "2",
     amount: 500,
-    date: new Date("2023-05-02").toISOString(),
+    date: new Date("2025-05-10").toISOString(), // Week 2
     type: "Remittance",
     purpose: "Tuition",
     contributor: "Sofia",
@@ -157,7 +157,7 @@ const sampleContributions = [
     id: "c12",
     goalId: "2",
     amount: 500,
-    date: new Date("2023-05-05").toISOString(),
+    date: new Date("2025-06-02").toISOString(), // Week 5
     type: "Cash",
     purpose: "Books",
     contributor: "Lucas",
@@ -167,7 +167,7 @@ const sampleContributions = [
     id: "c13",
     goalId: "2",
     amount: 75,
-    date: new Date("2023-05-03").toISOString(),
+    date: new Date("2025-05-18").toISOString(), // Week 3
     type: "Gift",
     purpose: "Books",
     contributor: "Mateo",
@@ -177,7 +177,7 @@ const sampleContributions = [
     id: "c14",
     goalId: "2",
     amount: 50,
-    date: new Date("2023-05-01").toISOString(),
+    date: new Date("2025-05-05").toISOString(), // Week 1
     type: "Cash",
     purpose: "Supplies",
     contributor: "Sofia",

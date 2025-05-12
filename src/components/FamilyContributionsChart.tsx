@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { formatNumber } from "../utils/formatters";
-import { generateContributionData, calculateTotalContributions } from "../utils/chartData";
+import { generateContributionData, calculateTotalContributions, calculateAllContributions } from "../utils/chartData";
 import { 
   ChartContainer,
   ChartTooltip, 
@@ -22,14 +22,23 @@ import { Separator } from "@/components/ui/separator";
 const FamilyContributionsChart = () => {
   const { t, language } = useLanguage();
   const [chartData, setChartData] = useState(generateContributionData());
-  const [totalContributions, setTotalContributions] = useState(calculateTotalContributions(chartData));
+  const [totalContributions, setTotalContributions] = useState(0);
   
-  // Re-generate chart data when localStorage changes
+  // Re-generate chart data when localStorage or sessionStorage changes
   useEffect(() => {
     const handleStorageChange = () => {
       const newData = generateContributionData();
       setChartData(newData);
-      setTotalContributions(calculateTotalContributions(newData));
+      
+      // Get all contributions to calculate total
+      const storedContributions = sessionStorage.getItem('userContributions');
+      if (storedContributions) {
+        const contributions = JSON.parse(storedContributions);
+        setTotalContributions(calculateAllContributions(contributions));
+      } else {
+        // If no contributions in storage, calculate from chart data
+        setTotalContributions(calculateTotalContributions(newData));
+      }
     };
     
     // Run once on mount
@@ -38,8 +47,8 @@ const FamilyContributionsChart = () => {
     // Listen for storage events
     window.addEventListener('storage', handleStorageChange);
     
-    // Check periodically
-    const interval = setInterval(handleStorageChange, 1000);
+    // Check periodically - reduced to every 500ms for better responsiveness
+    const interval = setInterval(handleStorageChange, 500);
     
     return () => {
       window.removeEventListener('storage', handleStorageChange);

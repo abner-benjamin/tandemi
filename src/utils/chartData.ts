@@ -9,13 +9,13 @@ export const generateContributionData = () => {
     contributions = JSON.parse(storedContributions);
   }
   
-  // Define week ranges
+  // Define week ranges for 2025
   const weekRanges = [
-    { name: "Week 1", start: new Date("2023-05-01"), end: new Date("2023-05-07") },
-    { name: "Week 2", start: new Date("2023-05-08"), end: new Date("2023-05-14") },
-    { name: "Week 3", start: new Date("2023-05-15"), end: new Date("2023-05-21") },
-    { name: "Week 4", start: new Date("2023-05-22"), end: new Date("2023-05-28") },
-    { name: "Week 5", start: new Date("2023-05-29"), end: new Date("2023-06-04") }
+    { name: "Week 1", start: new Date("2025-05-01"), end: new Date("2025-05-07") },
+    { name: "Week 2", start: new Date("2025-05-08"), end: new Date("2025-05-14") },
+    { name: "Week 3", start: new Date("2025-05-15"), end: new Date("2025-05-21") },
+    { name: "Week 4", start: new Date("2025-05-22"), end: new Date("2025-05-28") },
+    { name: "Week 5", start: new Date("2025-05-29"), end: new Date("2025-06-04") }
   ];
   
   // If we have no contributions from storage, use these default values
@@ -63,5 +63,10 @@ export const getContributionsByGoalId = (goalId: string, contributions: any[]) =
 // Calculate total amount for a specific goal
 export const calculateGoalTotal = (goalId: string, contributions: any[]) => {
   const goalContributions = getContributionsByGoalId(goalId, contributions);
-  return goalContributions.reduce((total, item) => total + item.amount, 0);
+  return goalContributions.reduce((total, item) => total + Number(item.amount), 0);
+};
+
+// Calculate total of all contributions
+export const calculateAllContributions = (contributions: any[]) => {
+  return contributions.reduce((total, item) => total + Number(item.amount), 0);
 };
