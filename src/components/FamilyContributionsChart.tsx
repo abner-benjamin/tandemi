@@ -1,4 +1,5 @@
 
+import { useEffect, useState } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { formatNumber } from "../utils/formatters";
 import { generateContributionData, calculateTotalContributions } from "../utils/chartData";
@@ -20,11 +21,34 @@ import { Separator } from "@/components/ui/separator";
 
 const FamilyContributionsChart = () => {
   const { t, language } = useLanguage();
-  const data = generateContributionData();
-  const totalContributions = calculateTotalContributions(data);
+  const [chartData, setChartData] = useState(generateContributionData());
+  const [totalContributions, setTotalContributions] = useState(calculateTotalContributions(chartData));
+  
+  // Re-generate chart data when localStorage changes
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const newData = generateContributionData();
+      setChartData(newData);
+      setTotalContributions(calculateTotalContributions(newData));
+    };
+    
+    // Run once on mount
+    handleStorageChange();
+    
+    // Listen for storage events
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Check periodically
+    const interval = setInterval(handleStorageChange, 1000);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, []);
   
   // Format week labels based on language
-  const formattedData = data.map(item => ({
+  const formattedData = chartData.map(item => ({
     ...item,
     week: language === "en" 
       ? item.week.replace("Week", "Wk") 

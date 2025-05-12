@@ -129,6 +129,78 @@ const sampleContributions = [
     contributor: "Alex",
     note: "Construction materials",
   },
+  {
+    id: "c8",
+    goalId: "3",
+    amount: 60,
+    date: new Date("2023-05-02"),
+    type: "Cash",
+    purpose: "Paint",
+    contributor: "Carlos",
+    note: "Paint supplies",
+  },
+  {
+    id: "c9",
+    goalId: "3",
+    amount: 80,
+    date: new Date("2023-05-05"),
+    type: "Remittance",
+    purpose: "Electrical work",
+    contributor: "Lucas",
+    note: "Electrical work expenses",
+  },
+  {
+    id: "c10",
+    goalId: "3",
+    amount: 120,
+    date: new Date("2023-05-03"),
+    type: "Gift",
+    purpose: "Tools",
+    contributor: "Alex",
+    note: "Tool purchases",
+  },
+  
+  // Spring Tuition for Sofia (id: 2)
+  {
+    id: "c11",
+    goalId: "2",
+    amount: 500,
+    date: new Date("2023-05-02"),
+    type: "Remittance",
+    purpose: "Tuition",
+    contributor: "Sofia",
+    note: "Tuition payment",
+  },
+  {
+    id: "c12",
+    goalId: "2",
+    amount: 500,
+    date: new Date("2023-05-05"),
+    type: "Cash",
+    purpose: "Books",
+    contributor: "Lucas",
+    note: "Books and materials",
+  },
+  {
+    id: "c13",
+    goalId: "2",
+    amount: 75,
+    date: new Date("2023-05-03"),
+    type: "Gift",
+    purpose: "Books",
+    contributor: "Mateo",
+    note: "Additional books",
+  },
+  {
+    id: "c14",
+    goalId: "2",
+    amount: 50,
+    date: new Date("2023-05-01"),
+    type: "Cash",
+    purpose: "Supplies",
+    contributor: "Sofia",
+    note: "School supplies",
+  }
 ];
 
 const GoalDetailPage = () => {
@@ -217,8 +289,14 @@ const GoalDetailPage = () => {
     description: "Goal details could not be loaded"
   };
   
-  // Filter contributions for this goal
-  const goalContributions = contributions.filter(c => c.goalId === id);
+  // Process contributions to ensure date objects
+  const processedContributions = contributions.map(c => ({
+    ...c,
+    date: c.date instanceof Date ? c.date : new Date(c.date)
+  }));
+  
+  // Filter contributions for this goal - now correctly ensuring all contributions for the goal are included
+  const goalContributions = processedContributions.filter(c => c.goalId === id);
   
   // Filter family members for this goal
   const goalFamilyMembers = familyMembers.filter(f => f.goalId === id);
@@ -236,7 +314,7 @@ const GoalDetailPage = () => {
       // Only update if we need to
       if (goal.progress !== totalContributed) {
         // Update local state
-        goal.progress = totalContributed;
+        const updatedGoal = {...goal, progress: totalContributed};
         
         // Update in session storage if needed
         const storedGoals = sessionStorage.getItem('userGoals');
@@ -247,6 +325,7 @@ const GoalDetailPage = () => {
           if (targetGoalIndex !== -1) {
             goalsArray[targetGoalIndex].progress = totalContributed;
             sessionStorage.setItem('userGoals', JSON.stringify(goalsArray));
+            setGoals(goalsArray);
           }
         }
       }
@@ -279,6 +358,11 @@ const GoalDetailPage = () => {
   } catch (e) {
     dueDate = new Date(); // Default to today if any error occurs
   }
+
+  // Sort contributions by date, newest first
+  const sortedContributions = [...goalContributions].sort((a, b) => 
+    new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
 
   return (
     <div className="min-h-screen bg-tandemi-light-gray animate-fade-in max-w-lg mx-auto">
@@ -360,8 +444,8 @@ const GoalDetailPage = () => {
             
             <h3 className="font-semibold mb-2">{t("goal_details.contributions")}</h3>
             <div className="space-y-3 max-h-60 overflow-y-auto no-scrollbar">
-              {goalContributions.length > 0 ? (
-                goalContributions.slice(0, 2).map((contribution) => (
+              {sortedContributions.length > 0 ? (
+                sortedContributions.slice(0, 3).map((contribution) => (
                   <ContributionItem
                     key={contribution.id}
                     id={contribution.id}
@@ -376,6 +460,17 @@ const GoalDetailPage = () => {
               ) : (
                 <div className="text-center p-4">
                   <p className="text-tandemi-neutral-gray">{t("contribution.empty")}</p>
+                </div>
+              )}
+              
+              {sortedContributions.length > 3 && (
+                <div className="text-center pt-2">
+                  <button 
+                    className="text-tandemi-pink text-sm font-medium"
+                    onClick={() => setActiveTab("contributions")}
+                  >
+                    {t("goal_details.view_all")}
+                  </button>
                 </div>
               )}
             </div>
@@ -393,8 +488,8 @@ const GoalDetailPage = () => {
             </div>
             
             <div className="space-y-3 max-h-screen overflow-y-auto no-scrollbar">
-              {goalContributions.length > 0 ? (
-                goalContributions.map((contribution) => (
+              {sortedContributions.length > 0 ? (
+                sortedContributions.map((contribution) => (
                   <ContributionItem
                     key={contribution.id}
                     id={contribution.id}

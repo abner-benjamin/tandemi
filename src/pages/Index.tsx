@@ -185,12 +185,39 @@ const sampleContributions = [
   }
 ];
 
+// Calculate correct progress values based on contributions
+const calculateProgress = () => {
+  const goalTotals = {};
+  
+  // Initialize goal totals
+  sampleGoals.forEach(goal => {
+    goalTotals[goal.id] = 0;
+  });
+  
+  // Add up contributions for each goal
+  sampleContributions.forEach(contribution => {
+    const goalId = contribution.goalId;
+    if (goalTotals[goalId] !== undefined) {
+      goalTotals[goalId] += contribution.amount;
+    }
+  });
+  
+  // Update goal progress values
+  return sampleGoals.map(goal => ({
+    ...goal,
+    progress: goalTotals[goal.id]
+  }));
+};
+
+// Update goals with correct progress
+const updatedGoals = calculateProgress();
+
 const Index = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    // Initialize session storage with sample goals
-    sessionStorage.setItem('userGoals', JSON.stringify(sampleGoals));
+    // Initialize session storage with sample goals with updated progress
+    sessionStorage.setItem('userGoals', JSON.stringify(updatedGoals));
     
     // Initialize session storage with sample contributions
     sessionStorage.setItem('userContributions', JSON.stringify(sampleContributions));
