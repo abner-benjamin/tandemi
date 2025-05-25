@@ -378,6 +378,90 @@ const translations = {
   "contribution.type.gift.description": {
     en: "Support given as goods, services, or food",
     es: "Apoyo en especie como alimentos o bienes"
+  },
+  
+  // Contribution recurring options
+  "contribution.repeat": {
+    en: "Repeat this contribution",
+    es: "Repetir esta contribución"
+  },
+  "contribution.frequency": {
+    en: "Frequency",
+    es: "Frecuencia"
+  },
+  "contribution.frequency.monthly": {
+    en: "Monthly",
+    es: "Mensual"
+  },
+  "contribution.frequency.weekly": {
+    en: "Weekly",
+    es: "Semanal"
+  },
+  "contribution.frequency.custom": {
+    en: "Custom",
+    es: "Personalizado"
+  },
+  "contribution.frequency.helper": {
+    en: "We'll remind you when it's time to log your next contribution.",
+    es: "Te recordaremos cuándo registrar tu próxima contribución."
+  },
+  "contribution.custom_days": {
+    en: "Days between contributions",
+    es: "Días entre contribuciones"
+  },
+  "contribution.custom_days_placeholder": {
+    en: "Enter number of days",
+    es: "Ingrese número de días"
+  },
+  
+  // New goal categories
+  "category.emergency": {
+    en: "Emergency",
+    es: "Emergencia"
+  },
+  "category.emergency.helper": {
+    en: "For urgent needs like health issues or home repairs",
+    es: "Para necesidades urgentes como salud o reparaciones"
+  },
+  "category.groceries": {
+    en: "Groceries",
+    es: "Comida"
+  },
+  "category.groceries.helper": {
+    en: "For help with weekly or monthly food costs",
+    es: "Para apoyar con gastos de comida"
+  },
+  "category.bills": {
+    en: "Bills",
+    es: "Servicios"
+  },
+  "category.bills.helper": {
+    en: "For help paying utilities like electricity or internet",
+    es: "Para ayudar con luz, internet o gas"
+  },
+  "category.celebration": {
+    en: "Celebration",
+    es: "Celebración"
+  },
+  "category.celebration.helper": {
+    en: "For birthdays, holidays, or special family events",
+    es: "Para cumpleaños, fiestas u ocasiones especiales"
+  },
+  "category.childcare": {
+    en: "Childcare",
+    es: "Cuidado infantil"
+  },
+  "category.childcare.helper": {
+    en: "For daycare, school supplies, or child support",
+    es: "Para guardería, útiles escolares o apoyo infantil"
+  },
+  "category.migration": {
+    en: "Migration",
+    es: "Migración"
+  },
+  "category.migration.helper": {
+    en: "For legal fees, travel, or documentation costs",
+    es: "Para trámites legales, viajes o documentos"
   }
 };
 

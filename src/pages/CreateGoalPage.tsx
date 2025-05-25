@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -30,6 +29,12 @@ const CreateGoalPage = () => {
 
   const handleSelectChange = (name: string, value: string) => {
     setFormData({ ...formData, [name]: value });
+  };
+
+  // Get helper text for selected category
+  const getCategoryHelper = (category: string) => {
+    if (!category) return "";
+    return t(`category.${category.toLowerCase()}.helper`);
   };
 
   // Format number with commas
@@ -189,9 +194,20 @@ const CreateGoalPage = () => {
                 <SelectItem value="Education">{t("category.education")}</SelectItem>
                 <SelectItem value="Housing">{t("category.housing")}</SelectItem>
                 <SelectItem value="Travel">{t("category.travel")}</SelectItem>
+                <SelectItem value="Emergency">{t("category.emergency")}</SelectItem>
+                <SelectItem value="Groceries">{t("category.groceries")}</SelectItem>
+                <SelectItem value="Bills">{t("category.bills")}</SelectItem>
+                <SelectItem value="Celebration">{t("category.celebration")}</SelectItem>
+                <SelectItem value="Childcare">{t("category.childcare")}</SelectItem>
+                <SelectItem value="Migration">{t("category.migration")}</SelectItem>
                 <SelectItem value="Other">{t("category.other")}</SelectItem>
               </SelectContent>
             </Select>
+            {formData.category && (
+              <p className="text-sm text-tandemi-neutral-gray mt-2">
+                {getCategoryHelper(formData.category)}
+              </p>
+            )}
           </div>
           
           <div>

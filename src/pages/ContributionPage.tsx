@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Check, Calendar, DollarSign } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 
 const ContributionPage = () => {
@@ -85,6 +86,9 @@ const ContributionPage = () => {
     type: "",
     purpose: "",
     note: "",
+    isRecurring: false,
+    frequency: "",
+    customDays: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -94,6 +98,10 @@ const ContributionPage = () => {
 
   const handleSelectChange = (name: string, value: string) => {
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSwitchChange = (checked: boolean) => {
+    setFormData({ ...formData, isRecurring: checked, frequency: "", customDays: "" });
   };
   
   // Function to get contribution type description based on selected type
@@ -210,6 +218,9 @@ const ContributionPage = () => {
                   type: "",
                   purpose: "",
                   note: "",
+                  isRecurring: false,
+                  frequency: "",
+                  customDays: "",
                 });
               }}
             >
@@ -322,6 +333,53 @@ const ContributionPage = () => {
                 <SelectItem value="other">{t("contribution.purpose.other")}</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <Label htmlFor="recurring">{t("contribution.repeat")}</Label>
+              <Switch
+                id="recurring"
+                checked={formData.isRecurring}
+                onCheckedChange={handleSwitchChange}
+              />
+            </div>
+
+            {formData.isRecurring && (
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="frequency">{t("contribution.frequency")}</Label>
+                  <Select onValueChange={(value) => handleSelectChange("frequency", value)}>
+                    <SelectTrigger className="input-field mt-1">
+                      <SelectValue placeholder={t("contribution.frequency")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="monthly">{t("contribution.frequency.monthly")}</SelectItem>
+                      <SelectItem value="weekly">{t("contribution.frequency.weekly")}</SelectItem>
+                      <SelectItem value="custom">{t("contribution.frequency.custom")}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-sm text-tandemi-neutral-gray mt-2">
+                    {t("contribution.frequency.helper")}
+                  </p>
+                </div>
+
+                {formData.frequency === "custom" && (
+                  <div>
+                    <Label htmlFor="customDays">{t("contribution.custom_days")}</Label>
+                    <Input
+                      id="customDays"
+                      name="customDays"
+                      type="number"
+                      placeholder={t("contribution.custom_days_placeholder")}
+                      className="input-field mt-1"
+                      value={formData.customDays}
+                      onChange={handleChange}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           
           <div>
