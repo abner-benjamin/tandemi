@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -81,6 +80,20 @@ const InviteFamilyPage = () => {
 
   const handleSelectChange = (name: string, value: string) => {
     setFormData({ ...formData, [name]: value });
+  };
+
+  // Function to get role description based on selected role
+  const getRoleDescription = (role: string) => {
+    switch (role) {
+      case "admin":
+        return t("family.role.admin.description");
+      case "contributor":
+        return t("family.role.contributor.description");
+      case "viewer":
+        return t("family.role.viewer.description");
+      default:
+        return "";
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -211,6 +224,11 @@ const InviteFamilyPage = () => {
                 <SelectItem value="viewer">{t("family.role.viewer")}</SelectItem>
               </SelectContent>
             </Select>
+            {formData.role && (
+              <p className="text-sm text-tandemi-neutral-gray mt-2">
+                {getRoleDescription(formData.role)}
+              </p>
+            )}
           </div>
           
           <div>

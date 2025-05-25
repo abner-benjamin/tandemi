@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useState, ReactNode } from "react";
 
 type LanguageContextType = {
@@ -294,6 +295,18 @@ const translations = {
   "family.role.viewer": {
     en: "Viewer",
     es: "Observador"
+  },
+  "family.role.admin.description": {
+    en: "Can create and manage goals, and invite family members",
+    es: "Puede crear y administrar metas, y añadir miembros de la familia"
+  },
+  "family.role.contributor.description": {
+    en: "Can send and log contributions",
+    es: "Puede enviar y registrar contribuciones"
+  },
+  "family.role.viewer.description": {
+    en: "Can only view goal progress",
+    es: "Solo puede ver el progreso de la meta"
   },
   "family.contact": {
     en: "Contact Method",
