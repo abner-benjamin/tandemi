@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -379,7 +380,7 @@ const GoalDetailPage = () => {
         <BackButton className="mb-4" to="/dashboard" />
         
         <div className="mb-4">
-          <h1 className="text-xl font-bold text-left mb-1">
+          <h1 className="text-2xl font-bold text-left mb-1">
             {goal.name}
           </h1>
           <p className="text-tandemi-neutral-gray text-sm text-left">
@@ -443,7 +444,7 @@ const GoalDetailPage = () => {
                 {goal.description ? goal.description : t("goal_details.no_description")}
               </p>
               
-              <div className="flex justify-between items-center mb-3">
+              <div className="flex justify-between items-center">
                 <div>
                   <p className="text-xs text-tandemi-neutral-gray">{t("goal_details.due_date")}</p>
                   <p className="font-medium">{dueDate.toLocaleDateString()}</p>
