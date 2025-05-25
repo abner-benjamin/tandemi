@@ -38,9 +38,8 @@ const DesktopDashboard = ({ goals, userName }: DesktopDashboardProps) => {
       <div className="bg-white rounded-2xl p-6 card-shadow">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold text-gray-900">Contribution History</h2>
-          {/* Optional: Add filter dropdown here */}
         </div>
-        <div className="h-80">
+        <div className="h-60">
           <FamilyContributionsChart />
         </div>
       </div>
@@ -68,7 +67,8 @@ const DesktopDashboard = ({ goals, userName }: DesktopDashboardProps) => {
                 amount={goal.amount}
                 progress={goal.progress}
                 onClick={() => navigate(`/goal/${goal.id}`)}
-                className="hover:shadow-lg transition-shadow cursor-pointer"
+                className="hover:shadow-lg transition-shadow cursor-pointer h-32"
+                variant="desktop"
               />
             ))}
           </div>

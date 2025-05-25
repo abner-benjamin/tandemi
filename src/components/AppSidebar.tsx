@@ -13,28 +13,28 @@ const AppSidebar = () => {
 
   const navigationItems = [
     {
-      label: t("dashboard.title") || "Dashboard",
+      label: "Home",
       path: "/dashboard",
       icon: Home,
     },
     {
       label: "All Goals",
-      path: "/goals",
+      path: "/dashboard",
       icon: Target,
     },
     {
       label: "Contributions",
-      path: "/contributions",
+      path: "/dashboard",
       icon: DollarSign,
     },
     {
       label: "Family",
-      path: "/family",
+      path: "/dashboard",
       icon: Users,
     },
     {
       label: "Settings",
-      path: "/settings",
+      path: "/dashboard",
       icon: Settings,
     },
   ];
@@ -44,8 +44,8 @@ const AppSidebar = () => {
       {/* Logo and App Name */}
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center gap-3">
-          <TandemiLogo size="sm" />
-          <span className="text-xl font-bold text-tandemi-pink">Tandemi</span>
+          <TandemiLogo size="sm" variant="icon" />
+          <span className="text-xl font-bold text-black">Tandemi</span>
         </div>
       </div>
 
@@ -74,7 +74,7 @@ const AppSidebar = () => {
       </nav>
 
       {/* Language Toggle */}
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-4 border-t border-gray-200 flex justify-center">
         <LanguageToggle />
       </div>
     </div>

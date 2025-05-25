@@ -12,9 +12,10 @@ type GoalCardProps = {
   progress: number;
   onClick: () => void;
   className?: string;
+  variant?: "mobile" | "desktop";
 };
 
-const GoalCard = ({ id, name, category, amount, progress, onClick, className }: GoalCardProps) => {
+const GoalCard = ({ id, name, category, amount, progress, onClick, className, variant = "mobile" }: GoalCardProps) => {
   const { t } = useLanguage();
   
   const getCategoryIcon = (category: string) => {
@@ -42,6 +43,38 @@ const GoalCard = ({ id, name, category, amount, progress, onClick, className }: 
         return "bg-purple-100 text-purple-600";
     }
   };
+
+  if (variant === "desktop") {
+    return (
+      <div 
+        className={cn("bg-white rounded-2xl p-4 card-shadow mb-4 active:scale-98 transition-transform flex flex-col justify-between", className)}
+        onClick={onClick}
+      >
+        <div>
+          <h3 className="font-semibold text-lg mb-2">{name}</h3>
+          <span className={`px-3 py-1 rounded-full text-xs ${getCategoryColor(category)} flex items-center gap-1 w-fit`}>
+            {getCategoryIcon(category)}
+            {t(`category.${category.toLowerCase()}`)}
+          </span>
+        </div>
+        
+        <div className="mt-4">
+          <div className="flex justify-between text-sm mb-1">
+            <span className="text-tandemi-neutral-gray">
+              {t("goal_details.progress")}
+            </span>
+            <span className="font-medium">${formatNumber(progress.toFixed(0))} / ${formatNumber(amount.toFixed(0))}</span>
+          </div>
+          <div className="w-full bg-tandemi-soft-gray rounded-full h-2">
+            <div 
+              className="bg-tandemi-pink h-2 rounded-full" 
+              style={{ width: `${Math.min(100, (progress / amount) * 100)}%` }}
+            ></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div 
