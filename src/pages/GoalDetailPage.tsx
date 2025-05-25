@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -372,10 +371,9 @@ const GoalDetailPage = () => {
     <div className="min-h-screen bg-tandemi-light-gray animate-fade-in max-w-lg mx-auto">
       <div className="p-4 flex items-center">
         <BackButton className="mr-2" to="/dashboard" />
-        <h1 className="text-lg font-bold truncate max-w-[280px] mx-auto overflow-x-auto whitespace-nowrap text-right">
+        <h1 className="text-lg font-bold text-right w-full pr-2">
           {goal.name}
         </h1>
-        <div className="w-10"></div> {/* Spacer for centering title */}
       </div>
       
       <div className="px-4">
@@ -439,9 +437,9 @@ const GoalDetailPage = () => {
                   <p className="font-medium">{dueDate.toLocaleDateString()}</p>
                 </div>
                 
-                <div>
-                  <p className="text-xs text-tandemi-neutral-gray">{t("category." + goal.category.toLowerCase())}</p>
-                  <p className="font-medium">{goal.category}</p>
+                <div className="text-right">
+                  <p className="text-xs text-tandemi-neutral-gray">{language === "en" ? "Type" : "Tipo"}</p>
+                  <p className="font-medium">{t("category." + goal.category.toLowerCase())}</p>
                 </div>
               </div>
             </div>
