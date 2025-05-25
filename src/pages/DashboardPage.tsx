@@ -6,8 +6,6 @@ import TandemiLogo from "../components/TandemiLogo";
 import GoalCard from "../components/GoalCard";
 import LanguageToggle from "../components/LanguageToggle";
 import FamilyContributionsChart from "../components/FamilyContributionsChart";
-import DesktopDashboard from "../components/DesktopDashboard";
-import ResponsiveLayout from "../components/ResponsiveLayout";
 import { Button } from "@/components/ui/button";
 
 // Sample data for the goals (fallback if sessionStorage is empty)
@@ -46,29 +44,21 @@ const DashboardPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   
+  // Override the user name with "Alex"
   const userName = "Alex";
   
+  // Get goals from sessionStorage
   const [goals, setGoals] = useState(() => {
+    // Try to load goals from sessionStorage first
     const storedGoals = sessionStorage.getItem('userGoals');
     if (storedGoals) {
       return JSON.parse(storedGoals);
     }
+    // Fall back to default sample goals
     return sampleGoals;
   });
   
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkIfMobile();
-    window.addEventListener('resize', checkIfMobile);
-    
-    return () => window.removeEventListener('resize', checkIfMobile);
-  }, []);
-  
+  // Listen for changes in sessionStorage
   useEffect(() => {
     const handleStorageChange = () => {
       const storedGoals = sessionStorage.getItem('userGoals');
@@ -95,16 +85,6 @@ const DashboardPage = () => {
     };
   }, []);
 
-  // Desktop version
-  if (!isMobile) {
-    return (
-      <ResponsiveLayout>
-        <DesktopDashboard />
-      </ResponsiveLayout>
-    );
-  }
-
-  // Mobile version (existing layout)
   return (
     <div className="min-h-screen bg-tandemi-light-gray animate-fade-in max-w-lg mx-auto relative pb-24">
       <div className="p-4 flex justify-between items-center">

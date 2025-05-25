@@ -128,15 +128,4 @@
   .input-field {
     @apply rounded-xl border border-tandemi-soft-gray bg-white px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-tandemi-pink;
   }
-
-  /* Desktop-specific styles */
-  @media (min-width: 768px) {
-    .desktop-grid {
-      @apply grid grid-cols-2 lg:grid-cols-3 gap-6;
-    }
-    
-    .desktop-chart {
-      @apply h-80;
-    }
-  }
 }
