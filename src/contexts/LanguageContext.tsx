@@ -462,6 +462,46 @@ const translations = {
   "category.migration.helper": {
     en: "For legal fees, travel, or documentation costs",
     es: "Para trámites legales, viajes o documentos"
+  },
+  
+  // Goal Details - Additional translations
+  "goal_details.shared_goal": {
+    en: "Shared goal with your family",
+    es: "Meta compartida con tu familia"
+  },
+  "goal_details.goal_overview": {
+    en: "Goal Overview",
+    es: "Resumen de la meta"
+  },
+  "goal_details.contributors": {
+    en: "Contributors",
+    es: "Contribuyentes"
+  },
+  "goal_details.family_members": {
+    en: "family members",
+    es: "miembros de la familia"
+  },
+  
+  // Category helpers for existing categories
+  "category.medical.helper": {
+    en: "For doctor visits, treatments, or medication costs",
+    es: "Para consultas médicas, tratamientos o medicinas"
+  },
+  "category.education.helper": {
+    en: "For school fees, supplies, or tuition support",
+    es: "Para colegiaturas, útiles escolares o apoyo educativo"
+  },
+  "category.housing.helper": {
+    en: "For rent, home repairs, or shared living expenses",
+    es: "Para renta, reparaciones del hogar o gastos compartidos"
+  },
+  "category.travel.helper": {
+    en: "For family visits, emergencies, or relocation costs",
+    es: "Para viajes familiares, emergencias o gastos de traslado"
+  },
+  "category.other.helper": {
+    en: "For anything that doesn't fit another category",
+    es: "Para cualquier otro gasto no cubierto por las categorías anteriores"
   }
 };
 

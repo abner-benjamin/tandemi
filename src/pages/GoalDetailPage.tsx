@@ -366,14 +366,26 @@ const GoalDetailPage = () => {
   const sortedContributions = [...goalContributions].sort((a, b) => 
     new Date(b.date).getTime() - new Date(a.date).getTime()
   );
+  
+  // Get helper text for selected category
+  const getCategoryHelper = (category: string) => {
+    if (!category) return "";
+    return t(`category.${category.toLowerCase()}.helper`);
+  };
 
   return (
     <div className="min-h-screen bg-tandemi-light-gray animate-fade-in max-w-lg mx-auto">
-      <div className="p-4 flex items-center">
-        <BackButton className="mr-2" to="/dashboard" />
-        <h1 className="text-lg font-bold text-right w-full pr-2">
-          {goal.name}
-        </h1>
+      <div className="p-4">
+        <BackButton className="mb-4" to="/dashboard" />
+        
+        <div className="mb-4">
+          <h1 className="text-xl font-bold text-left mb-1">
+            {goal.name}
+          </h1>
+          <p className="text-tandemi-neutral-gray text-sm text-left">
+            {t("goal_details.shared_goal")}
+          </p>
+        </div>
       </div>
       
       <div className="px-4">
@@ -426,12 +438,12 @@ const GoalDetailPage = () => {
           
           <TabsContent value="overview" className="mt-2">
             <div className="bg-white rounded-2xl p-4 card-shadow mb-4">
-              <h3 className="font-semibold mb-2">{goal.name}</h3>
+              <h3 className="font-semibold mb-2">{t("goal_details.goal_overview")}</h3>
               <p className="text-tandemi-neutral-gray text-sm mb-4">
                 {goal.description ? goal.description : t("goal_details.no_description")}
               </p>
               
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center mb-3">
                 <div>
                   <p className="text-xs text-tandemi-neutral-gray">{t("goal_details.due_date")}</p>
                   <p className="font-medium">{dueDate.toLocaleDateString()}</p>
@@ -442,6 +454,20 @@ const GoalDetailPage = () => {
                   <p className="font-medium">{t("category." + goal.category.toLowerCase())}</p>
                 </div>
               </div>
+              
+              <div className="mb-3">
+                <p className="text-xs text-tandemi-neutral-gray mb-1">
+                  {t("goal_details.contributors")}: {contributorsCount} {t("goal_details.family_members")}
+                </p>
+              </div>
+              
+              {goal.category && (
+                <div className="mt-3 p-3 bg-tandemi-light-gray rounded-lg">
+                  <p className="text-sm text-tandemi-neutral-gray">
+                    {getCategoryHelper(goal.category)}
+                  </p>
+                </div>
+              )}
             </div>
             
             <h3 className="font-semibold mb-2">{t("goal_details.recent_contributions")}</h3>
