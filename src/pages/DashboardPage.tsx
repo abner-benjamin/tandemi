@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -6,6 +7,8 @@ import TandemiLogo from "../components/TandemiLogo";
 import GoalCard from "../components/GoalCard";
 import LanguageToggle from "../components/LanguageToggle";
 import FamilyContributionsChart from "../components/FamilyContributionsChart";
+import ResponsiveLayout from "../components/ResponsiveLayout";
+import DesktopDashboard from "../components/DesktopDashboard";
 import { Button } from "@/components/ui/button";
 
 // Sample data for the goals (fallback if sessionStorage is empty)
@@ -85,7 +88,8 @@ const DashboardPage = () => {
     };
   }, []);
 
-  return (
+  // Mobile Layout Component
+  const MobileLayout = () => (
     <div className="min-h-screen bg-tandemi-light-gray animate-fade-in max-w-lg mx-auto relative pb-24">
       <div className="p-4 flex justify-between items-center">
         <TandemiLogo size="sm" />
@@ -135,6 +139,20 @@ const DashboardPage = () => {
         </Button>
       </div>
     </div>
+  );
+
+  return (
+    <ResponsiveLayout>
+      {/* Mobile content */}
+      <div className="block md:hidden">
+        <MobileLayout />
+      </div>
+      
+      {/* Desktop content */}
+      <div className="hidden md:block">
+        <DesktopDashboard />
+      </div>
+    </ResponsiveLayout>
   );
 };
 
