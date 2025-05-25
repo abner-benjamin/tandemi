@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -442,7 +443,7 @@ const GoalDetailPage = () => {
             </div>
             
             <h3 className="font-semibold mb-2">{t("goal_details.contributions")}</h3>
-            <div className="space-y-3 max-h-60 overflow-y-auto no-scrollbar">
+            <div className="space-y-3 overflow-y-visible">
               {sortedContributions.length > 0 ? (
                 sortedContributions.slice(0, 3).map((contribution) => (
                   <ContributionItem
