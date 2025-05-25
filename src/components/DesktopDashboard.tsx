@@ -26,7 +26,7 @@ const DesktopDashboard = ({ goals, userName }: DesktopDashboardProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex-1 p-8 space-y-8">
+    <div className="flex-1 p-8 space-y-8 max-w-7xl mx-auto">
       {/* Welcome Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900">
@@ -49,7 +49,7 @@ const DesktopDashboard = ({ goals, userName }: DesktopDashboardProps) => {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold text-gray-900">{t("dashboard.your_goals")}</h2>
           <Button 
-            className="bg-tandemi-pink hover:bg-opacity-90 text-white px-6 py-2 rounded-full"
+            className="bg-white border border-gray-300 hover:bg-gray-50 text-black px-6 py-2 rounded-full"
             onClick={() => navigate("/create-goal")}
           >
             {language === "es" ? "Crear nueva meta" : "Create a new goal"}
@@ -67,7 +67,7 @@ const DesktopDashboard = ({ goals, userName }: DesktopDashboardProps) => {
                 amount={goal.amount}
                 progress={goal.progress}
                 onClick={() => navigate(`/goal/${goal.id}`)}
-                className="hover:shadow-lg transition-shadow cursor-pointer h-32"
+                className="hover:shadow-lg transition-shadow cursor-pointer h-36"
                 variant="desktop"
               />
             ))}
@@ -76,7 +76,7 @@ const DesktopDashboard = ({ goals, userName }: DesktopDashboardProps) => {
           <div className="text-center p-12 bg-white rounded-2xl card-shadow">
             <p className="text-tandemi-neutral-gray text-lg">{t("dashboard.no_goals")}</p>
             <Button 
-              className="mt-4 bg-tandemi-pink hover:bg-opacity-90 text-white px-6 py-3 rounded-full"
+              className="mt-4 bg-white border border-gray-300 hover:bg-gray-50 text-black px-6 py-3 rounded-full"
               onClick={() => navigate("/create-goal")}
             >
               {language === "es" ? "Crear tu primera meta" : "Create your first goal"}

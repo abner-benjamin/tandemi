@@ -32,6 +32,10 @@ const GoalCard = ({ id, name, category, amount, progress, onClick, className, va
   };
   
   const getCategoryColor = (category: string) => {
+    if (variant === "desktop") {
+      return "bg-gray-100 text-tandemi-pink";
+    }
+    
     switch (category.toLowerCase()) {
       case "medical":
         return "bg-blue-100 text-blue-600";
@@ -51,7 +55,7 @@ const GoalCard = ({ id, name, category, amount, progress, onClick, className, va
         onClick={onClick}
       >
         <div>
-          <h3 className="font-semibold text-lg mb-2">{name}</h3>
+          <h3 className="font-semibold text-lg mb-2 text-black">{name}</h3>
           <span className={`px-3 py-1 rounded-full text-xs ${getCategoryColor(category)} flex items-center gap-1 w-fit`}>
             {getCategoryIcon(category)}
             {t(`category.${category.toLowerCase()}`)}
@@ -63,7 +67,7 @@ const GoalCard = ({ id, name, category, amount, progress, onClick, className, va
             <span className="text-tandemi-neutral-gray">
               {t("goal_details.progress")}
             </span>
-            <span className="font-medium">${formatNumber(progress.toFixed(0))} / ${formatNumber(amount.toFixed(0))}</span>
+            <span className="font-medium text-black">${formatNumber(progress.toFixed(0))} / ${formatNumber(amount.toFixed(0))}</span>
           </div>
           <div className="w-full bg-tandemi-soft-gray rounded-full h-2">
             <div 
