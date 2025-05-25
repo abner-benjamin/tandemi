@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -6,7 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import GoalCard from "./GoalCard";
 import FamilyContributionsChart from "./FamilyContributionsChart";
 import { Button } from "@/components/ui/button";
-import { Plus, Filter } from "lucide-react";
+import { Plus, Filter, DollarSign } from "lucide-react";
 
 // Sample data for the goals (fallback if sessionStorage is empty)
 const sampleGoals = [
