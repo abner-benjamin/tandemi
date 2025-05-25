@@ -6,7 +6,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { AuthProvider } from "./contexts/AuthContext";
-import ResponsiveLayout from "./components/ResponsiveLayout";
 import Index from "./pages/Index";
 import SplashPage from "./pages/SplashPage";
 import DashboardPage from "./pages/DashboardPage";
@@ -31,26 +30,10 @@ const App = () => (
               <Route path="/index" element={<Index />} />
               <Route path="/splash" element={<SplashPage />} />
               <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/create-goal" element={
-                <div className="md:hidden">
-                  <CreateGoalPage />
-                </div>
-              } />
-              <Route path="/goal/:id" element={
-                <div className="md:hidden">
-                  <GoalDetailPage />
-                </div>
-              } />
-              <Route path="/goal/:id/contribute" element={
-                <div className="md:hidden">
-                  <ContributionPage />
-                </div>
-              } />
-              <Route path="/goal/:id/invite" element={
-                <div className="md:hidden">
-                  <InviteFamilyPage />
-                </div>
-              } />
+              <Route path="/create-goal" element={<CreateGoalPage />} />
+              <Route path="/goal/:id" element={<GoalDetailPage />} />
+              <Route path="/goal/:id/contribute" element={<ContributionPage />} />
+              <Route path="/goal/:id/invite" element={<InviteFamilyPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
