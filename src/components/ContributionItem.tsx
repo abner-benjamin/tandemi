@@ -48,7 +48,7 @@ const ContributionItem = ({ amount, date, type, purpose, contributor, note }: Co
         </div>
         <div className="text-right">
           <p className="text-sm text-tandemi-neutral-gray">{format(date, "MMM d, yyyy")}</p>
-          <div className="flex gap-1 mt-1">
+          <div className="flex justify-end mt-1">
             <span className={`px-2 py-0.5 rounded-full text-xs ${getTypeColor(type)}`}>
               {t(`contribution.type.${type.toLowerCase()}`)}
             </span>
