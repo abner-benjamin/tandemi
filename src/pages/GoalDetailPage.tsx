@@ -301,6 +301,10 @@ const GoalDetailPage = () => {
   // Filter family members for this goal
   const goalFamilyMembers = familyMembers.filter(f => f.goalId === id);
   
+  // Calculate unique contributors count
+  const uniqueContributors = [...new Set(goalContributions.map(c => c.contributor))];
+  const contributorsCount = uniqueContributors.length;
+  
   // Format number with commas
   const formatNumber = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -442,7 +446,10 @@ const GoalDetailPage = () => {
               </div>
             </div>
             
-            <h3 className="font-semibold mb-2">{t("goal_details.contributions")}</h3>
+            <h3 className="font-semibold mb-2">{t("goal_details.recent_contributions")}</h3>
+            <p className="text-sm text-tandemi-neutral-gray mb-3">
+              {contributorsCount} {t("goal_details.contributors_count")}
+            </p>
             <div className="space-y-3 overflow-y-visible">
               {sortedContributions.length > 0 ? (
                 sortedContributions.slice(0, 3).map((contribution) => (

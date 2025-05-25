@@ -161,6 +161,14 @@ const translations = {
     en: "Contributions",
     es: "Contribuciones"
   },
+  "goal_details.recent_contributions": {
+    en: "Recent Contributions",
+    es: "Contribuciones recientes"
+  },
+  "goal_details.contributors_count": {
+    en: "family members have contributed",
+    es: "miembros de la familia han contribuido"
+  },
   "goal_details.family": {
     en: "Family",
     es: "Familia"
