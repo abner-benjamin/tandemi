@@ -454,20 +454,6 @@ const GoalDetailPage = () => {
                   <p className="font-medium">{t("category." + goal.category.toLowerCase())}</p>
                 </div>
               </div>
-              
-              <div className="mb-3">
-                <p className="text-xs text-tandemi-neutral-gray mb-1">
-                  {t("goal_details.contributors")}: {contributorsCount} {t("goal_details.family_members")}
-                </p>
-              </div>
-              
-              {goal.category && (
-                <div className="mt-3 p-3 bg-tandemi-light-gray rounded-lg">
-                  <p className="text-sm text-tandemi-neutral-gray">
-                    {getCategoryHelper(goal.category)}
-                  </p>
-                </div>
-              )}
             </div>
             
             <h3 className="font-semibold mb-2">{t("goal_details.recent_contributions")}</h3>
