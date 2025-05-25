@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -95,6 +94,24 @@ const ContributionPage = () => {
 
   const handleSelectChange = (name: string, value: string) => {
     setFormData({ ...formData, [name]: value });
+  };
+  
+  // Function to get contribution type description based on selected type
+  const getTypeDescription = (type: string) => {
+    switch (type) {
+      case "cash":
+        return t("contribution.type.cash.description");
+      case "remittance":
+        return t("contribution.type.remittance.description");
+      case "bank_transfer":
+        return t("contribution.type.bank_transfer.description");
+      case "mobile_payment":
+        return t("contribution.type.mobile_payment.description");
+      case "gift":
+        return t("contribution.type.gift.description");
+      default:
+        return "";
+    }
   };
   
   // Format number with commas
@@ -278,9 +295,16 @@ const ContributionPage = () => {
               <SelectContent>
                 <SelectItem value="cash">{t("contribution.type.cash")}</SelectItem>
                 <SelectItem value="remittance">{t("contribution.type.remittance")}</SelectItem>
+                <SelectItem value="bank_transfer">{t("contribution.type.bank_transfer")}</SelectItem>
+                <SelectItem value="mobile_payment">{t("contribution.type.mobile_payment")}</SelectItem>
                 <SelectItem value="gift">{t("contribution.type.gift")}</SelectItem>
               </SelectContent>
             </Select>
+            {formData.type && (
+              <p className="text-sm text-tandemi-neutral-gray mt-2">
+                {getTypeDescription(formData.type)}
+              </p>
+            )}
           </div>
           
           <div>

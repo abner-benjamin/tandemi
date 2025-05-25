@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState, ReactNode } from "react";
 
 type LanguageContextType = {
@@ -343,6 +342,34 @@ const translations = {
   "family.add_member": {
     en: "Add Member",
     es: "Agregar miembro"
+  },
+  "contribution.type.bank_transfer": {
+    en: "Bank Transfer",
+    es: "Transferencia bancaria"
+  },
+  "contribution.type.mobile_payment": {
+    en: "Mobile Payment",
+    es: "Pago móvil"
+  },
+  "contribution.type.cash.description": {
+    en: "Physical cash given directly",
+    es: "Efectivo entregado directamente"
+  },
+  "contribution.type.remittance.description": {
+    en: "Sent via Western Union, Ria, or similar",
+    es: "Enviado por Western Union, Ria u otro servicio"
+  },
+  "contribution.type.bank_transfer.description": {
+    en: "Sent through Zelle or a bank account",
+    es: "Enviado a través de Zelle o banco"
+  },
+  "contribution.type.mobile_payment.description": {
+    en: "Sent via Venmo, PayPal, or CashApp",
+    es: "Enviado por Venmo, PayPal, CashApp u otro"
+  },
+  "contribution.type.gift.description": {
+    en: "Support given as goods, services, or food",
+    es: "Apoyo en especie como alimentos o bienes"
   }
 };
 

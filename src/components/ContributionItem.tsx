@@ -23,8 +23,12 @@ const ContributionItem = ({ amount, date, type, purpose, contributor, note }: Co
         return "bg-green-100 text-green-600";
       case "remittance":
         return "bg-blue-100 text-blue-600";
-      case "gift":
+      case "bank_transfer":
         return "bg-purple-100 text-purple-600";
+      case "mobile_payment":
+        return "bg-orange-100 text-orange-600";
+      case "gift":
+        return "bg-pink-100 text-pink-600";
       default:
         return "bg-gray-100 text-gray-600";
     }
@@ -44,6 +48,9 @@ const ContributionItem = ({ amount, date, type, purpose, contributor, note }: Co
         </div>
         <div className="text-right">
           <p className="text-sm text-tandemi-neutral-gray">{format(date, "MMM d, yyyy")}</p>
+          <p className="text-xs text-tandemi-neutral-gray mt-0.5">
+            {t(`contribution.type.${type.toLowerCase()}`)}
+          </p>
           <div className="flex gap-1 mt-1">
             <span className={`px-2 py-0.5 rounded-full text-xs ${getTypeColor(type)}`}>
               {t(`contribution.type.${type.toLowerCase()}`)}
