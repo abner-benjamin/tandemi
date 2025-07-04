@@ -19,7 +19,7 @@ const TandemiLogo = ({ size = "md", variant = "full" }: TandemiLogoProps) => {
   return (
     <div className="flex items-center">
       <img 
-        src="/lovable-uploads/01442081-0592-44b0-9a27-5f412f1cd3bc.png" 
+        src="/tandemi/lovable-uploads/01442081-0592-44b0-9a27-5f412f1cd3bc.png" 
         alt="Tandemi Logo" 
         className={getSizeClass()}
       />
