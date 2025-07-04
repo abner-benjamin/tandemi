@@ -3,19 +3,16 @@
 
 This project is configured to automatically deploy to GitHub Pages using GitHub Actions.
 
+Your app will be available at: **https://abner-benjamin.github.io/tandemi/**
+
 ## Setup Instructions
 
-1. **Update the base path**: Edit `vite.config.ts` and replace `'your-repo-name'` with your actual GitHub repository name:
-   ```typescript
-   base: process.env.NODE_ENV === 'production' ? '/your-actual-repo-name/' : '/',
-   ```
-
-2. **Enable GitHub Pages**:
-   - Go to your repository on GitHub
+1. **Enable GitHub Pages**:
+   - Go to your repository on GitHub (https://github.com/abner-benjamin/tandemi)
    - Navigate to Settings → Pages
    - Under "Source", select "GitHub Actions"
 
-3. **Push your changes**: The deployment will automatically trigger when you push to the main branch
+2. **Push your changes**: The deployment will automatically trigger when you push to the main branch
 
 ## Manual Deployment
 
@@ -40,6 +37,12 @@ npm run preview
 
 ## Troubleshooting
 
-- Make sure the repository name in `vite.config.ts` matches your GitHub repository name exactly
-- Ensure GitHub Pages is enabled in your repository settings
+- Make sure GitHub Pages is enabled in your repository settings with "GitHub Actions" as the source
 - Check the Actions tab for any deployment errors
+- Ensure your repository is public (GitHub Pages requires public repos for free accounts)
+
+## Repository Details
+
+- Repository: https://github.com/abner-benjamin/tandemi
+- Live URL: https://abner-benjamin.github.io/tandemi/
+- Base path configured: `/tandemi/`
